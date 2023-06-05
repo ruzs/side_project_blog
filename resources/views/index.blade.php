@@ -64,7 +64,7 @@
                         </p>
                     </div>
                     <!-- Divider-->
-                    <hr class="my-4" />
+                    <hr class="my-4">
                     <!-- Post preview-->
                     <div class="post-preview">
                         <a href="post.html"><h2 class="post-title">I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.</h2></a>

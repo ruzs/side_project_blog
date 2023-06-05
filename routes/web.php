@@ -14,7 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {return view('welcome');});
+Route::get('/index', function () {return view('index');});
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('post/lists', ['as' => 'post.lists', 'uses' => 'TaskController@lists']);
+Route::any('post/validate', ['as' => 'post.validate', 'uses' => 'TaskController@formValidation']);
+Route::any('post/{post}/{doc_id}/download', ['as' => 'post.download', 'uses' => 'TaskController@download']);
+Route::any('post/upload', ['as' => 'post.upload', 'uses' => 'TaskController@upload']);
+Route::resource('post', 'TaskController')->only([
+    'index', 'create', 'store', 'edit', 'update', 'show'
+]);
+
+
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('register', 'Auth\LoginController@showRegistrationForm')->name('register');
