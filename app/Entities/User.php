@@ -11,8 +11,8 @@ use Wildside\Userstamps\Userstamps;
 class User extends Authenticatable
 {
     // use Notifiable;
-    use Userstamps;
     use SoftDeletes;
+    use Userstamps;
 
 
 
