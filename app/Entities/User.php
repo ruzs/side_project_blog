@@ -4,12 +4,15 @@ namespace App\Entities;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+// use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Wildside\Userstamps\Userstamps;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-
+    // use Notifiable;
+    use Userstamps;
+    use SoftDeletes;
 
 
 
@@ -20,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'account','name', 'email', 'password',
+        'account', 'name', 'email', 'password', 'remember_token',
     ];
 
     /**

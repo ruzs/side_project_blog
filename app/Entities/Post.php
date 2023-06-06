@@ -4,15 +4,15 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-// use Wildside\Userstamps\Userstamps;
+use Wildside\Userstamps\Userstamps;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Notifications\Notifiable;
+// use Illuminate\Notifications\Notifiable;
 
 class Post extends Model
 {
-    use Notifiable;
+    // use Notifiable;
     use SoftDeletes;
-    // use Userstamps;
+    use Userstamps;
 
 
 
@@ -22,5 +22,10 @@ class Post extends Model
         'title', 'category_id', 'content',
     ];
 
+    public function creator()
+    {
+        return $this->belongsTo("App\Entities\User", "created_by");
+    }
 
+    
 }
