@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2023-05-31 05:31:51
--- 伺服器版本： 10.4.14-MariaDB
--- PHP 版本： 7.4.9
+-- 產生時間： 2023-06-09 18:06:53
+-- 伺服器版本： 10.4.27-MariaDB
+-- PHP 版本： 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `caregories` (
   `id` int(11) NOT NULL,
-  `title` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(20) NOT NULL,
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_by` int(11) NOT NULL,
@@ -46,9 +46,9 @@ CREATE TABLE `caregories` (
 
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
-  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(128) NOT NULL,
   `category_id` int(11) NOT NULL DEFAULT 0,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text NOT NULL,
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_by` int(11) NOT NULL,
@@ -65,10 +65,11 @@ CREATE TABLE `posts` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `name` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `account` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(32) DEFAULT NULL,
+  `account` varchar(128) NOT NULL,
+  `password` varchar(128) DEFAULT NULL,
+  `email` varchar(32) DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   `updated_at` datetime NOT NULL,
   `created_by` int(11) DEFAULT NULL,
@@ -81,9 +82,9 @@ CREATE TABLE `users` (
 -- 傾印資料表的資料 `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `account`, `password`, `email`, `updated_by`, `updated_at`, `created_by`, `created_at`, `deleted_by`, `deleted_at`) VALUES
-(1, 'Eddie', 'eddie', '$2y$10$OOI.8KnUhyCEpf4WqLpXLeSAoW8op87ntcwzwQMarHV62u8xQDIVK', 'eddie@12345678', 1, '2023-04-28 09:23:14', 1, '2023-04-28 09:23:14', NULL, NULL),
-(2, 'Leslie', 'leslie', '$2y$10$mV2cHYss3t3ZezkmYkb0DeUu9mojG1G0df6oNd1inSLhvaK5MYFlG', 'leslie@12345678', NULL, '2023-05-31 03:13:44', NULL, '2023-05-31 03:13:44', NULL, NULL);
+INSERT INTO `users` (`id`, `name`, `account`, `password`, `email`, `remember_token`, `updated_by`, `updated_at`, `created_by`, `created_at`, `deleted_by`, `deleted_at`) VALUES
+(1, 'Eddie', 'eddie', '$2y$10$OOI.8KnUhyCEpf4WqLpXLeSAoW8op87ntcwzwQMarHV62u8xQDIVK', 'eddie@12345678', 'jQT9pPJUBSD9AhomS7kuYVfCCD0Ij3XsNQrd9muTfNaFAHFJ8OvggQeptZPf', 1, '2023-04-28 09:23:14', 1, '2023-04-28 09:23:14', NULL, NULL),
+(2, 'Leslie', 'leslie', '$2y$10$mV2cHYss3t3ZezkmYkb0DeUu9mojG1G0df6oNd1inSLhvaK5MYFlG', 'leslie@12345678', NULL, NULL, '2023-05-31 03:13:44', NULL, '2023-05-31 03:13:44', NULL, NULL);
 
 --
 -- 已傾印資料表的索引
