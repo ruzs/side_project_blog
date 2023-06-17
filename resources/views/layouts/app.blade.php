@@ -38,10 +38,10 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">About</a></li>
+                        <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('home') }}">Home</a></li>
+                        {{-- <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">About</a></li>
                         <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Sample Post</a></li>
-                        <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Contact</a></li> --}}
                         @guest
                             @if (!request()->route()->getName() =='login')
                             <li class="nav-item">
@@ -74,14 +74,18 @@
         </nav>
 
         <header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
+            {{-- <div class="row justify-content-center"> --}}
+                <div class="col-md-10 col-lg-8 col-xl-7 m-auto">
                     <div class="site-heading">
-                        <h1>Eddie's BLOG</h1>
-                        <span><a href="{{route('home')}}" class="subheading">Welcome To Here</a></span>
+                        <h1>Eddie's <br>BLOG</h1>
+                        <span>
+                            <a href="{{route('home')}}" class="subheading">
+                                Welcome To Here
+                            </a>
+                        </span>
                     </div>
                 </div>
-            </div>
+            {{-- </div> --}}
         </header>
             <main class="py-4">
                 @yield('content')

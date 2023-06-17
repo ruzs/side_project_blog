@@ -891,6 +891,9 @@ progress {
   --bs-gutter-y: 3rem;
 }
 
+label.required, span.required {
+  color: red !important;
+}
 @media (min-width: 576px) {
   .col-sm {
     flex: 1 0 0%;
@@ -2003,7 +2006,7 @@ progress {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  border-radius: 0;
+  border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 @media (prefers-reduced-motion: reduce) {

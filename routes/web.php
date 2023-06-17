@@ -22,7 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route::any('post/{post}/{doc_id}/download', ['as' => 'post.download', 'uses' => 'TaskController@download']);
 // Route::any('post/upload', ['as' => 'post.upload', 'uses' => 'TaskController@upload']);
 Route::resource('post', 'PostController')->only([
-    'index', 'create', 'store', 'edit', 'update', 'show'
+    'store', 'edit', 'update', 'show'
 ]);
 
 
