@@ -25,7 +25,7 @@ class PostFormRequest extends FormRequest
     {
         $rule=[
             'title'          => 'required|string|max:128',
-            'category_id'    => 'required|int|max:128',
+            'category'       => 'nullable|string|max:128',
             'content'        => 'required|string',
         ];
         return $rule;

@@ -1,14 +1,15 @@
 {{-- @section('post-form-modal') --}}
 <!-- Post Form Modal -->
 <div id="modal-post-form" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-post-form-label" aria-hidden="true">
-    <form action="" method="post">
+    <form action="{{ route('post.store') }}" method="post">
+        @csrf
         <div class="modal-dialog modal-dialog-scrollable modal-xl modal-xxl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 id="modal-post-form-label" class="modal-title">Create Post</h3>
-                    <button type="button" class="btn-delete-event btn btn-outline-secondary btn-sm ml-auto">
+                    {{-- <button type="button" class="btn-delete-event btn btn-outline-secondary btn-sm ml-auto">
                         <i class="fa fa-solid fa-trash"></i> Delete
-                    </button>
+                    </button> --}}
                     <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -24,13 +25,16 @@
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label class="font-weight-bold"><span class="required">*</span>Category</label>
-                                <input name="category" class="form-control" placeholder="Category" type="text">
+                                <select name="category" id="select_category" class="form-select rounded select2bt4" >
+                                    <option value="0">Zero</option>
+                                    <option value="4">Four</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label class="font-weight-bold"><span class="required">*</span>Content</label>
-                                <textarea name="content" class="form-control" placeholder="Content" cols="30" rows="20"></textarea>
+                                <textarea name="content" class="form-control" placeholder="Content" cols="30" rows="15"></textarea>
                             </div>
                         </div>
                     </div>
@@ -50,6 +54,14 @@
         </div>
     </form>
 </div>
+{{-- <script>
+    $('#select_category').select2({
+        theme: 'bootstrap4',
+        tags: true,
+    });
+    console.log($('title').val());
+
+</script> --}}
 {{-- @endsection --}}
 
 {{-- @section('reminder-form-modal')

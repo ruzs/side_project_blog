@@ -94,6 +94,7 @@ class PostController extends Controller
         $data = $request->validated();
         DB::beginTransaction();
         try {
+            dd($data);
             $this->post_repo->save($data);
             
             DB::commit();

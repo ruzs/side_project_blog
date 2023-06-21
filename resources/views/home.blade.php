@@ -30,7 +30,7 @@
             </div>
             <div class="card my-2">
                 <div class="card-header">
-                    <h1 class="text-center font-weight-bold">功能區</h1>
+                    <h1 class="text-center font-weight-bold">Feature</h1>
                 </div>
                 <div class="card-body row">
                     <button class="btn btn-success p-2 col-sm-3 col-12" data-toggle="modal" data-target="#modal-post-form">New Post</button>
