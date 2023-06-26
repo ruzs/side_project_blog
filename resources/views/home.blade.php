@@ -33,11 +33,70 @@
                     <h1 class="text-center font-weight-bold">Feature</h1>
                 </div>
                 <div class="card-body row">
-                    <button class="btn btn-success p-2 col-sm-3 col-12" data-toggle="modal" data-target="#modal-post-form">New Post</button>
+                    <button id='create_post' class="btn btn-success p-2 col-sm-3 col-12 m-1" data-toggle="modal" data-target="#modal-new-post-form"><i class="fa-solid fa-file"></i> New Post</button>
+                    <button id='edit_post' class="btn btn-primary p-2 col-sm-3 col-12 m-1" data-toggle="modal" data-target="#modal-edit-post-form"><i class="fa-solid fa-pen-to-square"></i> Edit Post</button>
+                    <button id='delete_post' class="btn-delete-event btn btn-outline-secondary p-2 col-sm-3 col-12 m-1"><i class="fa fa-solid fa-trash"></i> Delete</button>
+                    <div class="col-12 table-responsive">
+                        <table class="table text-center">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col" style="width:10%">#</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Subtitle</th>
+                                    <th scope="col" style="width:10%">Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($rows as $key => $row)
+                                <tr>
+                                    <td scope="row">{{$key}}</td>
+                                    <td>{{$row->title}}</td>
+                                    <td>{{$row->subtitle}}</td>
+                                    <td><a href="#" class="btn btn-outline-primary btn-sm m-1 p-2"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    
                 </div>
             </div>
-                {{-- @dd(session()) --}}
         </div>
     </div>
 </div>
+<footer class="border-top">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="#!">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#!">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://github.com/ruzs" target='_blank'>
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="small text-center text-muted fst-italic">Copyright &copy; Your Website {{date('Y')}}</div>
+            </div>
+        </div>
+    </div>
+</footer>
 @endsection

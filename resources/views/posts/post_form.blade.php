@@ -1,6 +1,6 @@
 {{-- @section('post-form-modal') --}}
 <!-- Post Form Modal -->
-<div id="modal-post-form" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-post-form-label" aria-hidden="true">
+<div id="modal-new-post-form" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-post-form-label" aria-hidden="true">
     <form action="{{ route('post.store') }}" method="post">
         @csrf
         <div class="modal-dialog modal-dialog-scrollable modal-xl modal-xxl">
@@ -24,10 +24,18 @@
                         </div>
                         <div class="col-xl-4">
                             <div class="form-group">
+                                <label class="font-weight-bold">Subtitle</label>
+                                <input name="subtitle" class="form-control" placeholder="Subtitle" type="text">
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group">
                                 <label class="font-weight-bold"><span class="required">*</span>Category</label>
-                                <select name="category" id="select_category" class="form-select rounded select2bt4" >
-                                    <option value="0">Zero</option>
-                                    <option value="4">Four</option>
+                                <select name="category_id" id="select_category" class="form-select rounded select2bt4" >
+                                    <option value="0">無分類</option>
+                                    {{-- @foreach ( as )
+                                        <option value="4">Four</option>
+                                    @endforeach --}}
                                 </select>
                             </div>
                         </div>
@@ -63,6 +71,68 @@
 
 </script> --}}
 {{-- @endsection --}}
+
+<!-- Post Form Modal -->
+<div id="modal-edit-post-form" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-post-form-label" aria-hidden="true">
+    <form action="{{ route('post.store') }}" method="post">
+        @csrf
+        <div class="modal-dialog modal-dialog-scrollable modal-xl modal-xxl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-post-form-label" class="modal-title">Edit Post</h3>
+                    {{-- <button type="button" class="btn-delete-event btn btn-outline-secondary btn-sm ml-auto">
+                        <i class="fa fa-solid fa-trash"></i> Delete
+                    </button> --}}
+                    <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                            </div>
+                        </div>
+                        {{-- <div class="col-xl-8">
+                            <div class="form-group">
+                                <label class="font-weight-bold"><span class="required">*</span>Title</label>
+                                <input name="title" class="form-control" placeholder="Title" type="text">
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold"><span class="required">*</span>Category</label>
+                                <select name="category_id" id="select_category" class="form-select rounded select2bt4" >
+                                    <option value="0">Zero</option>
+                                    <option value="4">Four</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold"><span class="required">*</span>Content</label>
+                                <textarea name="content" class="form-control" placeholder="Content" cols="30" rows="15"></textarea>
+                            </div>
+                        </div> --}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row w-100 justify-content-between">
+                        <button type="button" class="btn btn-danger p-2 col-4 col-lg-1" data-dismiss="modal">Close</button>
+                        <div class="col-8 col-lg-3">
+                            <div class="row justify-content-end">
+                                <input type="submit" value="Submit" class="btn btn-primary p-2 col-5">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
 
 {{-- @section('reminder-form-modal')
 <!-- Reminder Form Modal -->

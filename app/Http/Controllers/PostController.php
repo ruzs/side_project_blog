@@ -36,7 +36,6 @@ class PostController extends Controller
      */
     public function index()
     {
-
         return view("posts.post_index",$this->data);
     }
 
@@ -94,21 +93,19 @@ class PostController extends Controller
         $data = $request->validated();
         DB::beginTransaction();
         try {
-            dd($data);
+            // dd($this->post_repo,$data); 
             $this->post_repo->save($data);
-            
             DB::commit();
         } catch (\Exception $e) {
             dd($e);
             DB::rollBack();
             // $this->errorlog_repo->saveError($e);
-
             return redirect()->back()->with('error', true);
         }
 
         if ($request->continue)
             return redirect()->back()->with('success', true);
-        return redirect()->route('post.index')->with('success', true);
+        return redirect()->route('home.index')->with('success', true);
     }
 
     /**

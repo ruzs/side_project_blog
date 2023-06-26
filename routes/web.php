@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {return view('welcome');});
-Route::get('/index', function () {return view('index');});
-Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/', 'HomeController@home');
+Route::resource('home', 'HomeController')->only([
+    'index', 'show', 'store', 'edit', 'update',
+]);
 
 // Route::get('post/lists', ['as' => 'post.lists', 'uses' => 'TaskController@lists']);
 // Route::any('post/validate', ['as' => 'post.validate', 'uses' => 'TaskController@formValidation']);

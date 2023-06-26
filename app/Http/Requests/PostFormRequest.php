@@ -24,9 +24,10 @@ class PostFormRequest extends FormRequest
     public function rules()
     {
         $rule=[
-            'title'          => 'required|string|max:128',
-            'category'       => 'nullable|string|max:128',
-            'content'        => 'required|string',
+            'title'         => 'required|string|max:128',
+            'subtitle'      => 'nullable|string|max:128',
+            'category_id'   => 'required|int|max:128',
+            'content'       => 'required|string',
         ];
         return $rule;
     }

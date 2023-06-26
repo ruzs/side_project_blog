@@ -24,12 +24,12 @@ class UserFormRequest extends FormRequest
     public function rules()
     {
         $rule=[
-            'name'          => 'required|string|max:128',
-            'account'        => 'required|string|max:128',
-            'password'        => 'nullable|string|max:128|confirmed',
-            'email'        => 'required|email|max:128',
-            'role'        => 'nullable|array',
-            'role.*'        => 'nullable|int',
+            'name'      => 'required|string|max:128',
+            'account'   => 'required|string|max:128',
+            'password'  => 'nullable|string|max:128|confirmed',
+            'email'     => 'required|email|max:128',
+            'role'      => 'nullable|array',
+            'role.*'    => 'nullable|int',
         ];
         return $rule;
     }

@@ -19,12 +19,16 @@ class Post extends Model
     protected $table = 'posts';
 
     protected $fillable = [
-        'title', 'category_id', 'content',
+        'title', 'subtitle', 'category_id', 'content', 'updated_by', 'updated_at'
     ];
 
     public function creator()
     {
         return $this->belongsTo("App\Entities\User", "created_by");
+    }
+    public function caregorie()
+    {
+        return $this->belongsTo("App\Entities\Caregorie", "category_id");
     }
 
     
