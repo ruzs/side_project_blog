@@ -12,13 +12,13 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
-
+                
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="account" class="col-md-4 col-form-label text-md-right">Account</label>
+                            <label for="account" class="col-md-4 col-form-label text-md-right"><span class="required">*</span>Account</label>
                             <div class="col-md-6">
                                 <input id="account" type="text" class="form-control @error('account') is-invalid @enderror" name="account" value="{{ old('account') }}" placeholder="Account" required autocomplete="account" autofocus>
                                 @error('account')
@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right"><span class="required">*</span>{{ __('Password') }}</label>
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="current-password">
                                 @error('password')
@@ -38,8 +38,17 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                
                             </div>
                         </div>
+
+                        @if (count($errors))
+                        <div class="form-group row justify-content-end">
+                            <div class="col-md-9">
+                                <span class="m-auto required" style="font-size: 16px">{{$errors? $errors:''}}</span>
+                            </div>
+                        </div>
+                        @endif
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
@@ -64,7 +73,7 @@
                                     </a>
                                 @endif
                                 @if (Route::has('register'))
-                                    <a class="btn btn-success btn-sm float-right" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="btn btn-success btn-sm float-right mt-2" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 @endif
                             </div>
                         </div>

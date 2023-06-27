@@ -160,17 +160,13 @@ class PostController extends Controller
                 'created_by'=> $post->created_by,
                 'created_at'=> $post->created_at
             ]);
-
-            // dd($data);
             
             $data['uuid']=$post->id;
             $data['version']=$post->version+1;
-            // dd($post);
             $post->update($data);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            // dd("30");
             // $this->errorlog_repo->saveError($e);
             return redirect()->back()->with('error', true);
         }
@@ -178,5 +174,10 @@ class PostController extends Controller
         if ($request->continue)
             return redirect()->back()->with('success', true);
         return redirect()->route('post.index')->with('success', true);
+    }
+    public function data(Request $request) {
+        return $this->post_repo->getPost($request->id);
+        // return [$this->post_repo->getPost(),];
+        // return $request;
     }
 }

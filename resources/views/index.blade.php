@@ -66,7 +66,7 @@
                         </a>
                         <p class="post-meta">
                             Posted by 
-                            <a href="#!"> {{$row->creator->name}} </a> 
+                            <a href="#!" class="font-weight-bold"> {{$row->creator->name}} </a> 
                             {{date('M d, Y',strtotime($row->created_at))}}
                         </p>
                     </div>

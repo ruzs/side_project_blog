@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', 'HomeController@home');
+// Route::get('/', 'HomeController@home')->middleware('guest');
 Route::resource('home', 'HomeController')->only([
     'index', 'show', 'store', 'edit', 'update',
 ]);
@@ -23,10 +24,10 @@ Route::resource('home', 'HomeController')->only([
 // Route::any('post/validate', ['as' => 'post.validate', 'uses' => 'TaskController@formValidation']);
 // Route::any('post/{post}/{doc_id}/download', ['as' => 'post.download', 'uses' => 'TaskController@download']);
 // Route::any('post/upload', ['as' => 'post.upload', 'uses' => 'TaskController@upload']);
+Route::post('post/data', ['as' => 'post.data', 'uses' => 'PostController@data']);
 Route::resource('post', 'PostController')->only([
     'store', 'edit', 'update', 'show'
 ]);
-
 
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

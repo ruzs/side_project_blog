@@ -37,7 +37,7 @@
                     <button id='edit_post' class="btn btn-primary p-2 col-sm-3 col-12 m-1" data-toggle="modal" data-target="#modal-edit-post-form"><i class="fa-solid fa-pen-to-square"></i> Edit Post</button>
                     <button id='delete_post' class="btn-delete-event btn btn-outline-secondary p-2 col-sm-3 col-12 m-1"><i class="fa fa-solid fa-trash"></i> Delete</button>
                     <div class="col-12 table-responsive">
-                        <table class="table text-center">
+                        <table id='edit_table' class="table text-center">
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col" style="width:10%">#</th>
@@ -49,10 +49,10 @@
                             <tbody>
                                 @foreach ($rows as $key => $row)
                                 <tr>
-                                    <td scope="row">{{$key}}</td>
+                                    <td scope="row">{{$key+1}}</td>
                                     <td>{{$row->title}}</td>
                                     <td>{{$row->subtitle}}</td>
-                                    <td><a href="#" class="btn btn-outline-primary btn-sm m-1 p-2"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                    <td><button id='{{$key+1}}' class="btn btn-outline-primary btn-sm m-1 p-2" data-toggle="modal" data-target="#modal-edit-post-form"><i class="fa-solid fa-pen-to-square"></i></button></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -99,4 +99,32 @@
         </div>
     </div>
 </footer>
+<script>
+    $(document).on('click','#edit_table  tbody tr td button',function () {
+        id=$(this).attr('id');
+        edit_data()
+    });
+    function edit_data() {
+        $.ajax({
+            url: `{{ route('post.data') }}`,
+            type: "POST",
+            dataType : 'json',
+            data:{
+                _token: "{{ csrf_token() }}",
+                id: id,
+            },
+            success: function (res) {
+                console.log('res',res);
+                $('#modal-edit-post-form input[name=title]').val(res.title);
+                $('#modal-edit-post-form input[name=subtitle]').val(res.subtitle);
+                $('#modal-edit-post-form select[name=category_id]').append(`<option value="${res.category_id}">無分類</option>`);
+                // $('#modal-edit-post-form select[name=category_id]').val(res.category_id);
+                $('#modal-edit-post-form textarea[name=content]').val(res.content);
+            },
+            error: function (err) {
+                console.log('err',err);
+            }
+        })
+    };
+</script>
 @endsection

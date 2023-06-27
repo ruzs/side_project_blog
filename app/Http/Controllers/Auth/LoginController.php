@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
+    private $data;
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -42,13 +43,18 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        
-        return view('auth.login');
+        $this->data=[
+            'bg'=>'assets/img/contact-bg.jpg',
+        ];
+        return view('auth.login',$this->data);
     }
 
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        $this->data=[
+            'bg'=>'assets/img/contact-bg.jpg',
+        ];
+        return view('auth.register',$this->data);
     }
     /**
      * Get the login username to be used by the controller.

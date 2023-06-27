@@ -19,7 +19,7 @@
 
                         <p class="post-meta">
                             Posted by
-                            <a class="text-dark"> {{ $row->creator->name }} </a>
+                            <a class="text-dark font-weight-bold"> {{ $row->creator->name }} </a>
                             {{-- {{date('M d, Y H:i:s',strtotime($row->created_at))}} --}}
                             {{ date('M d, Y', strtotime($row->created_at)) }}
                         </p>

@@ -42,7 +42,7 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label class="font-weight-bold"><span class="required">*</span>Content</label>
-                                <textarea name="content" class="form-control" placeholder="Content" cols="30" rows="15"></textarea>
+                                <textarea id="new_textarea" name="content" class="form-control" placeholder="Content" cols="30" rows="15"></textarea>
                             </div>
                         </div>
                     </div>
@@ -74,15 +74,15 @@
 
 <!-- Post Form Modal -->
 <div id="modal-edit-post-form" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-post-form-label" aria-hidden="true">
-    <form action="{{ route('post.store') }}" method="post">
+    <form action="#" method="post">
         @csrf
         <div class="modal-dialog modal-dialog-scrollable modal-xl modal-xxl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 id="modal-post-form-label" class="modal-title">Edit Post</h3>
-                    {{-- <button type="button" class="btn-delete-event btn btn-outline-secondary btn-sm ml-auto">
+                    <h3 id="modal-edit-post-form-label" class="modal-title">Edit Post</h3>
+                    <button type="button" class="btn-delete-event btn btn-outline-secondary btn-sm ml-auto">
                         <i class="fa fa-solid fa-trash"></i> Delete
-                    </button> --}}
+                    </button>
                     <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -93,27 +93,32 @@
                             <div class="form-group">
                             </div>
                         </div>
-                        {{-- <div class="col-xl-8">
+                        <div class="col-xl-8">
                             <div class="form-group">
                                 <label class="font-weight-bold"><span class="required">*</span>Title</label>
-                                <input name="title" class="form-control" placeholder="Title" type="text">
+                                <input name="title" class="form-control" placeholder="Title" type="text" value="">
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold">Subtitle</label>
+                                <input name="subtitle" class="form-control" placeholder="Subtitle" type="text">
                             </div>
                         </div>
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label class="font-weight-bold"><span class="required">*</span>Category</label>
-                                <select name="category_id" id="select_category" class="form-select rounded select2bt4" >
-                                    <option value="0">Zero</option>
-                                    <option value="4">Four</option>
+                                <select name="category_id" id="select_edit_category" class="form-select rounded select2bt4" >
+                                    
                                 </select>
                             </div>
                         </div>
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label class="font-weight-bold"><span class="required">*</span>Content</label>
-                                <textarea name="content" class="form-control" placeholder="Content" cols="30" rows="15"></textarea>
+                                <textarea id="edit_textarea" name="content" class="form-control" placeholder="Content" cols="30" rows="15"></textarea>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

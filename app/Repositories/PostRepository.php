@@ -21,4 +21,8 @@ class PostRepository extends EloquentRepository
     {
         return $this->model->orderBy('title')->get();
     }
+    public function getPost($id)
+    {
+        return $this->model->where('id', $id)->first();
+    }
 }
