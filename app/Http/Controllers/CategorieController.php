@@ -6,30 +6,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Entities\Post;
-use App\Repositories\PostRepository;
+use App\Entities\Categorie;
 use App\Repositories\CategorieRepository;
 // use App\Repositories\ErrorLogRepository;
 
-use App\Http\Requests\PostFormRequest;
+use App\Http\Requests\CategorieFormRequest;
 
-class PostController extends Controller
+class CategorieController extends Controller
 {
 
     private $data;
     private $log_name;
-    private $post_repo;
     private $categorie_repo;
     // private $errorlog_repo;
 
-    public function __construct(PostRepository $post_repo,
-                                CategorieRepository $categorie_repo
+    public function __construct(CategorieRepository $categorie_repo
                                 // ErrorLogRepository $errorlog_repo
     )
     {
-        $this->log_name         = 'Post';
-        $this->post_repo        = $post_repo;
-        $this->categorie_repo   = $categorie_repo;
+        $this->log_name         = 'Categorie';
+        $this->categorie_repo        = $categorie_repo;
         // $this->errorlog_repo    = $errorlog_repo;
     }
 
@@ -41,7 +37,7 @@ class PostController extends Controller
 
     // public function index()
     // {
-    //     return view("posts.post_index",$this->data);
+    //     return view("categories.categorie_index",$this->data);
     // }
 
     /**
@@ -52,7 +48,7 @@ class PostController extends Controller
 
     // public function lists(Request $request)
     // {
-    //     return $this->post_repo->getDatatable($request);
+    //     return $this->categorie_repo->getDatatable($request);
     // }
 
     /**
@@ -63,13 +59,13 @@ class PostController extends Controller
     // public function getFormData()
     // {
     //     $mode = config('constants.form_modes.' . getRouteNameMode() . '.label');
-    //     $title = $mode . ' Post';
-    //     $module_title = 'posts';
+    //     $title = $mode . ' Categorie';
+    //     $module_title = 'categories';
     //     return [
     //         'header_title' => $title,
     //         'breadcrumbs'  => [
     //             'module'       => $module_title,
-    //             'module_route' => 'post.index',
+    //             'module_route' => 'categorie.index',
     //             'title'        => $title,
     //         ],
     //     ];
@@ -83,22 +79,22 @@ class PostController extends Controller
     // public function create()
     // {
     //     $this->data = $this->getFormData();
-    //     return view("posts.post_form", $this->data);
+    //     return view("categories.categorie_form", $this->data);
     // }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\PostFormRequest  $request
+     * @param  \App\Http\Requests\CategorieFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostFormRequest $request)
+    public function store(CategorieFormRequest $request)
     {
         // 驗證
         $data = $request->validated();
         DB::beginTransaction();
         try {
-            $this->post_repo->save($data);
+            $this->categorie_repo->save($data);
             DB::commit();
         } catch (\Exception $e) {
             dd($e);
@@ -118,12 +114,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show(Post $post)
+    // public function show(Categorie $categorie)
     // {
     //     $this->data = $this->getFormData();
-    //     $this->data['row'] = $post;
-    //     $this->data['route_index'] = route('post.index');
-    //     return view("posts.post_form", $this->data);
+    //     $this->data['row'] = $categorie;
+    //     $this->data['route_index'] = route('categorie.index');
+    //     return view("categories.categorie_form", $this->data);
     // }
 
     /**
@@ -132,31 +128,31 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function edit(Post $post)
+    // public function edit(Categorie $categorie)
     // {
         
-    //     $this->data['row'] = $post;
+    //     $this->data['row'] = $categorie;
     //     // dd($this->data);
-    //     return view("posts.post_form", $this->data);
+    //     return view("categories.categorie_form", $this->data);
     // }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\PostFormRequest  $request
+     * @param  \App\Http\Requests\CategorieFormRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostFormRequest $request, Post $post)
+    public function update(CategorieFormRequest $request, Categorie $categorie)
     {
         $data = $request->validated();
         
         DB::beginTransaction();
         try {
             if (isset($data['delete'])) {
-                $post->delete();
+                $categorie->delete();
             }else{
-                $post->update($data);
+                $categorie->update($data);
             }
             DB::commit();
         } catch (\Exception $e) {
@@ -170,10 +166,6 @@ class PostController extends Controller
         return redirect()->route('home.index')->with('success', true);
     }
     public function data(Request $request) {
-        $this->data=[
-            'row'=>$this->post_repo->getPost($request->id),
-            'categories'=>$this->categorie_repo->getAllCategorie(),
-        ];
-        return $this->data;
+        return $this->categorie_repo->getCategorie($request->id);
     }
 }

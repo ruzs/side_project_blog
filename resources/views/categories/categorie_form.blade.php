@@ -1,12 +1,12 @@
 {{-- @section('post-form-modal') --}}
-<!-- Post Form Modal -->
-<div id="modal-new-post-form" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-post-form-label" aria-hidden="true">
-    <form action="{{ route('post.store') }}" method="post">
+<!-- Categorie Form Modal -->
+<div id="modal-new-categorie-form" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-categorie-form-label" aria-hidden="true">
+    <form action="{{ route('categorie.store') }}" method="post">
         @csrf
-        <div class="modal-dialog modal-dialog-scrollable modal-xl modal-xxl">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content shadow-sm">
                 <div class="modal-header">
-                    <h3 id="modal-post-form-label" class="modal-title">Create Post</h3>
+                    <h3 id="modal-categorie-form-label" class="modal-title">Create Categorie</h3>
                     <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -19,38 +19,15 @@
                                 <input name="title" class="form-control" placeholder="Title" type="text">
                             </div>
                         </div>
-                        <div class="col-xl-4">
-                            <div class="form-group">
-                                <label class="font-weight-bold">Subtitle</label>
-                                <input name="subtitle" class="form-control" placeholder="Subtitle" type="text">
-                            </div>
-                        </div>
-                        <div class="col-xl-4">
-                            <div class="form-group">
-                                <label class="font-weight-bold"><span class="required">*</span>Category</label>
-                                <select name="category_id" id="select_category" class="form-select rounded select2bt4" >
-                                    <option value="0">無分類</option>
-                                    @foreach ($categories as  $key => $categorie)
-                                        <option value="{{$categorie->id}}">{{$categorie->title}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label class="font-weight-bold"><span class="required">*</span>Content</label>
-                                <textarea id="new_textarea" name="content" class="form-control" placeholder="Content" cols="30" rows="15"></textarea>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="row w-100 justify-content-between">
                         <button type="button" class="btn btn-danger p-2 col-auto col-lg-auto" data-dismiss="modal">Close</button>
-                        <div class="col-8 col-lg-3">
+                        <div class="col-8 col-lg-5">
                             <div class="row justify-content-between">
-                                <input type="reset" value="Reset" class="btn btn-success p-2 col-5">
-                                <input type="submit" value="Submit" class="btn btn-primary p-2 col-5">
+                                <input type="reset" value="Reset" class="btn btn-success p-2 col-auto">
+                                <input type="submit" value="Submit" class="btn btn-primary p-2 col-auto">
                             </div>
                         </div>
                     </div>
@@ -69,34 +46,32 @@
 </script> --}}
 {{-- @endsection --}}
 
-<!-- Post All Modal -->
-<div id="modal-all-post-form" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-post-form-label" aria-hidden="true">
+<!-- Categorie All Modal -->
+<div id="modal-all-categorie-form" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-categorie-form-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl modal-xxl">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modal-post-form-label" class="modal-title">All Post</h3>
+                <h3 id="modal-categorie-form-label" class="modal-title">All Categorie</h3>
                 <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="col-12 table-responsive">
-                    <table id='post_edit_table' class="table text-center">
+                    <table id='categorie_edit_table' class="table text-center">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col" style="width:10%">#</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Subtitle</th>
                                 <th scope="col" style="width:10%">Active</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($rows as $key => $row)
+                            @foreach ($categories as $key => $categorie)
                             <tr>
-                                <td scope="row">{{$key+1}}</td>
-                                <td class="font-weight-bold">{{$row->title}}</td>
-                                <td>{{$row->subtitle}}</td>
-                                <td><button id='{{$key+1}}' class="btn btn-outline-primary btn-sm m-1 p-2 post_edit_btn" data-toggle="modal" data-target="#modal-edit-post-form" data-url='{{ route('post.update', $row->id) }}'><i class="fa-solid fa-pen-to-square"></i></button></td>
+                                <td scope="row" >{{$key+1}}</td>
+                                <td class="font-weight-bold">{{$categorie->title}}</td>
+                                <td><button id='{{$key+1}}' class="btn btn-outline-primary btn-sm m-1 p-2 categorie_edit_btn" data-toggle="modal" data-target="#modal-edit-categorie-form" data-url='{{ route('categorie.update', $categorie->id) }}'><i class="fa-solid fa-pen-to-square"></i></button></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -112,21 +87,21 @@
     </div>
 </div>
 
-<!-- Post Form Modal -->
-<div id="modal-edit-post-form" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-post-form-label" aria-hidden="true">
+<!-- Categorie Form Modal -->
+<div id="modal-edit-categorie-form" class="modal fade shadow-sm" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-categorie-form-label" aria-hidden="true">
     <form action="#" method="post">
         @csrf
         @if (@$rows)
             <input name="_method" type="hidden" value="PATCH">
         @endif
-        <div class="modal-dialog modal-dialog-scrollable modal-xl modal-xxl">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content shadow-sm">
                 <div class="modal-header">
-                    <h3 id="modal-edit-post-form-label" class="modal-title">Edit Post</h3>
-                    <button id="edit_post_delete" type="submit" class="btn-delete-event btn btn-outline-secondary btn-sm ml-auto">
+                    <h3 id="modal-edit-categorie-form-label" class="modal-title">Edit Categorie</h3>
+                    <button id="edit_categorie_delete" type="button" class="btn-delete-event btn btn-outline-secondary btn-sm ml-auto">
                         <i class="fa fa-solid fa-trash"></i> Delete
                     </button>
-                    <button id='edit_post_close_top' type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -142,34 +117,14 @@
                                 <input name="title" class="form-control" placeholder="Title" type="text" value="">
                             </div>
                         </div>
-                        <div class="col-xl-4">
-                            <div class="form-group">
-                                <label class="font-weight-bold">Subtitle</label>
-                                <input name="subtitle" class="form-control" placeholder="Subtitle" type="text">
-                            </div>
-                        </div>
-                        <div class="col-xl-4">
-                            <div class="form-group">
-                                <label class="font-weight-bold"><span class="required">*</span>Category</label>
-                                <select name="category_id" id="select_edit_category" class="form-select rounded select2bt4" >
-                                    
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label class="font-weight-bold"><span class="required">*</span>Content</label>
-                                <textarea id="edit_textarea" name="content" class="form-control" placeholder="Content" cols="30" rows="15"></textarea>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="row w-100 justify-content-between">
-                        <button id='edit_post_close' type="button" class="btn btn-danger p-2 col-4 col-lg-1" data-dismiss="modal">Close</button>
+                        <button id='edit_close' type="button" class="btn btn-danger p-2 col-4 col-lg-auto" data-dismiss="modal">Close</button>
                         <div class="col-8 col-lg-3">
                             <div class="row justify-content-end">
-                                <input type="submit" value="Submit" class="btn btn-primary p-2 col-5">
+                                <input type="submit" value="Submit" class="btn btn-primary p-2 col-auto">
                             </div>
                         </div>
                     </div>

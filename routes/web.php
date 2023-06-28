@@ -29,6 +29,11 @@ Route::resource('post', 'PostController')->only([
     'store', 'edit', 'update', 'show'
 ]);
 
+Route::post('categorie/data', ['as' => 'categorie.data', 'uses' => 'CategorieController@data']);
+Route::resource('categorie', 'CategorieController')->only([
+    'store', 'edit', 'update', 'show'
+]);
+
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('register', 'Auth\LoginController@showRegistrationForm')->name('register');

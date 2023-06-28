@@ -8,7 +8,7 @@ use Wildside\Userstamps\Userstamps;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 // use Illuminate\Notifications\Notifiable;
 
-class Caregorie extends Model
+class Categorie extends Model
 {
     // use Notifiable;
     use SoftDeletes;
@@ -16,7 +16,7 @@ class Caregorie extends Model
 
 
 
-    protected $table = 'caregories';
+    protected $table = 'categories';
 
     protected $fillable = [
         'title', 'updated_by', 'updated_at'

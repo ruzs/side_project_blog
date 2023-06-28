@@ -26,9 +26,9 @@ class Post extends Model
     {
         return $this->belongsTo("App\Entities\User", "created_by");
     }
-    public function caregorie()
+    public function categorie()
     {
-        return $this->belongsTo("App\Entities\Caregorie", "category_id");
+        return $this->belongsTo("App\Entities\Categorie", "category_id");
     }
 
     
