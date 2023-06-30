@@ -3,25 +3,25 @@
 namespace App\Repositories;
 
 use App\Repositories\EloquentRepository;
-use App\Entities\Categorie;
+use App\Entities\Category;
 use App\DataTables\CoreDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class CategorieRepository extends EloquentRepository
+class CategoryRepository extends EloquentRepository
 {
     protected $model;
 
-    public function __construct(Categorie $model)
+    public function __construct(Category $model)
     {
         $this->model = $model;
     }
 
-    public function getAllCategorie()
+    public function getAllCategory()
     {
         return $this->model->orderBy('created_at','asc')->get();
     }
-    public function getCategorie($id)
+    public function getCategory($id)
     {
         return $this->model->where('id', $id)->first();
     }

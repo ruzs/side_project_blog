@@ -85,7 +85,7 @@
             </div>
         </nav>
 
-        <header class="masthead" style="background-image: url({{asset($bg)}})">
+        <header class="masthead" style="background-image: url({{@asset($bg)}})">
             {{-- <div class="row justify-content-center"> --}}
                 <div class="col-md-10 col-lg-8 col-xl-7 m-auto">
                     <div class="site-heading">

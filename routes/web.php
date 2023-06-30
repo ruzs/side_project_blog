@@ -13,37 +13,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/', 'HomeController@home');
-// Route::get('/', 'HomeController@home')->middleware('guest');
-Route::resource('home', 'HomeController')->only([
-    'index', 'show', 'store', 'edit', 'update',
-]);
-
-// Route::get('post/lists', ['as' => 'post.lists', 'uses' => 'TaskController@lists']);
-// Route::any('post/validate', ['as' => 'post.validate', 'uses' => 'TaskController@formValidation']);
-// Route::any('post/{post}/{doc_id}/download', ['as' => 'post.download', 'uses' => 'TaskController@download']);
-// Route::any('post/upload', ['as' => 'post.upload', 'uses' => 'TaskController@upload']);
-Route::post('post/data', ['as' => 'post.data', 'uses' => 'PostController@data']);
-Route::resource('post', 'PostController')->only([
-    'store', 'edit', 'update', 'show'
-]);
-
-Route::post('categorie/data', ['as' => 'categorie.data', 'uses' => 'CategorieController@data']);
-Route::resource('categorie', 'CategorieController')->only([
-    'store', 'edit', 'update', 'show'
-]);
-
-
+// 無須驗證
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('register', 'Auth\LoginController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('login', 'Auth\LoginController@login');
 Route::any('logout', 'Auth\LoginController@logout')->name('logout');
-
 // Password Reset Routes...
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
-Route::get('/index', function () {return view('index');})->name('index');
+
+// Route::get('/index', function () {return view('index');})->name('index');
+Route::get('/', 'HomeController@home');
+
+// 需經過驗證
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('home', 'HomeController')->only([
+        'index', 'show', 'store', 'edit', 'update',
+    ]);
+    Route::post('post/data', ['as' => 'post.data', 'uses' => 'PostController@data']);
+    Route::resource('post', 'PostController')->only([
+        'store', 'edit', 'update', 'show'
+    ]);
+    
+    Route::post('categorie/data', ['as' => 'categorie.data', 'uses' => 'CategorieController@data']);
+    Route::resource('categorie', 'CategorieController')->only([
+        'store', 'edit', 'update', 'show'
+    ]);
+    
+});
+

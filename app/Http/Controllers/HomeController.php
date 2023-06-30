@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Entities\Post;
 use App\Repositories\PostRepository;
-use App\Entities\Categorie;
-use App\Repositories\CategorieRepository;
+use App\Entities\Category;
+use App\Repositories\CategoryRepository;
 
 class HomeController extends Controller
 {
     private $data;
     private $post_repo;
-    private $categorie_repo;
+    private $category_repo;
     
 
     /**
@@ -20,11 +20,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(PostRepository $post_repo,CategorieRepository $categorie_repo)
+    public function __construct(PostRepository $post_repo,CategoryRepository $category_repo)
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
         $this->post_repo        = $post_repo;
-        $this->categorie_repo   = $categorie_repo;
+        $this->category_repo   = $category_repo;
     }
 
     /**
@@ -44,7 +44,7 @@ class HomeController extends Controller
     public function index()
     {
         $rows=$this->post_repo->getAllPost();
-        $categories=$this->categorie_repo->getAllCategorie();
+        $categories=$this->category_repo->getAllCategory();
         $this->data=[
             'bg'=>'assets/img/about-bg.jpg',
             'rows'=> $rows,

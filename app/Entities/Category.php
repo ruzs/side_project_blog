@@ -8,7 +8,7 @@ use Wildside\Userstamps\Userstamps;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 // use Illuminate\Notifications\Notifiable;
 
-class Categorie extends Model
+class Category extends Model
 {
     // use Notifiable;
     use SoftDeletes;
