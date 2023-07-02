@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Entities\Post;
 use App\Repositories\PostRepository;
-use App\Repositories\CategorieRepository;
+use App\Repositories\CategoryRepository;
 // use App\Repositories\ErrorLogRepository;
 
 use App\Http\Requests\PostFormRequest;
@@ -19,17 +19,17 @@ class PostController extends Controller
     private $data;
     private $log_name;
     private $post_repo;
-    private $categorie_repo;
+    private $category_repo;
     // private $errorlog_repo;
 
     public function __construct(PostRepository $post_repo,
-                                CategorieRepository $categorie_repo
+                                CategoryRepository $category_repo
                                 // ErrorLogRepository $errorlog_repo
     )
     {
         $this->log_name         = 'Post';
         $this->post_repo        = $post_repo;
-        $this->categorie_repo   = $categorie_repo;
+        $this->category_repo   = $category_repo;
         // $this->errorlog_repo    = $errorlog_repo;
     }
 
@@ -172,7 +172,7 @@ class PostController extends Controller
     public function data(Request $request) {
         $this->data=[
             'row'=>$this->post_repo->getPost($request->id),
-            'categories'=>$this->categorie_repo->getAllCategorie(),
+            'categorys'=>$this->category_repo->getAllCategory(),
         ];
         return $this->data;
     }
