@@ -43,8 +43,13 @@ class HomeController extends Controller
     }
     public function index()
     {
-        $rows=$this->post_repo->getAllPost();
-        $categories=$this->category_repo->getAllCategory();
+        if (auth()->user()->id ==1) {
+            $rows=$this->post_repo->getAllPost();
+            $categories=$this->category_repo->getAllCategory();
+        }else{
+            $rows=$this->post_repo->getUserPost(auth()->user()->id);
+            $categories=$this->category_repo->getUserCategory(auth()->user()->id);
+        }
         $this->data=[
             'bg'=>'assets/img/about-bg.jpg',
             'rows'=> $rows,

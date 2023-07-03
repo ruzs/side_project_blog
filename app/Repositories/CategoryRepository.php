@@ -21,6 +21,10 @@ class CategoryRepository extends EloquentRepository
     {
         return $this->model->orderBy('created_at','asc')->get();
     }
+    public function getUserCategory($created_by)
+    {
+        return $this->model->where('created_by', $created_by)->get();
+    }
     public function getCategory($id)
     {
         return $this->model->where('id', $id)->first();

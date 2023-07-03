@@ -21,6 +21,10 @@ class PostRepository extends EloquentRepository
     {
         return $this->model->orderBy('title')->get();
     }
+    public function getUserPost($created_by)
+    {
+        return $this->model->where('created_by', $created_by)->get();
+    }
     public function getPost($id)
     {
         return $this->model->where('id', $id)->first();
