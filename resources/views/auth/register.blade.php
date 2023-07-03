@@ -47,17 +47,19 @@
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="new-password">
                                     @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror
-                                </div>
+                                        @enderror
+                                    </div>
+                                    <input type="checkbox" class="col-md-2" style="max-width:20px" onclick="showPassword()">
                             </div>
                             <div class="form-group row">
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right"><span class="required">*</span>{{ __('Confirm Password') }}</label>
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password">
                                 </div>
+                                <input type="checkbox" class="col-md-2" style="max-width:20px" onclick="showPasswordConfirmation()">
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -72,4 +74,26 @@
             </div>
         </div>
     </div>
+    <script>
+        // 顯示密碼
+    function showPassword() {
+        let type = $("input[name='password']").attr('type');
+        
+        if (type ==='password') {
+            $("input[name='password']").attr('type', 'text');
+        } else {
+            $("input[name='password']").attr('type', 'password');
+        }
+    }
+// 顯示確認密碼
+    function showPasswordConfirmation() {
+        let type2 = $("input[name='password_confirmation']").attr('type');
+
+        if (type2 ==='password') {
+            $("input[name='password_confirmation']").attr('type', 'text');
+        } else {
+            $("input[name='password_confirmation']").attr('type', 'password');
+        }
+    }
+    </script>
 @endsection

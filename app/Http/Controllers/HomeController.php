@@ -54,6 +54,7 @@ class HomeController extends Controller
             'bg'=>'assets/img/about-bg.jpg',
             'rows'=> $rows,
             'categories'=>$categories,
+            'all_categories'=>$this->post_repo->getAllPost(),
         ];
         return view('home',$this->data);
     }

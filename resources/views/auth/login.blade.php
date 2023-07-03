@@ -38,8 +38,8 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                
                             </div>
+                            <input type="checkbox" class="col-md-2" style="max-width:20px" onclick="showPassword()">
                         </div>
 
                         @if (count($errors))
@@ -83,4 +83,15 @@
         </div>
     </div>
 </div>
+<script>
+    function showPassword() {
+        let type = $("input[name='password']").attr('type');
+        
+        if (type ==='password') {
+            $("input[name='password']").attr('type', 'text');
+        } else {
+            $("input[name='password']").attr('type', 'password');
+        }
+    }
+</script>
 @endsection

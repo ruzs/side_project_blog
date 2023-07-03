@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('home', 'HomeController')->only([
         'index', 'show',
     ]);
+    
     Route::post('post/data', ['as' => 'post.data', 'uses' => 'PostController@data']);
     Route::resource('post', 'PostController')->only([
         'store', 'edit', 'update', 'show'

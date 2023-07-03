@@ -78,7 +78,7 @@
                             @else
                             <tr>
                                 <td colspan='4'>
-                                    <a href="javascript:void(0)" class="nav-link disabled">Your Post not found</a>
+                                    <a href="javascript:void(0)" class="nav-link disabled">Your Category not found</a>
                                 </td>
                             </tr>
                             @endif

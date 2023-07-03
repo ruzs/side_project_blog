@@ -30,7 +30,7 @@
                                 <label class="font-weight-bold"><span class="required">*</span>Category</label>
                                 <select name="category_id" id="select_category" class="form-select rounded select2bt4" >
                                     <option value="0">無分類</option>
-                                    @foreach ($categories as  $key => $categorie)
+                                    @foreach ($all_categories as  $key => $categorie)
                                         <option value="{{$categorie->id}}">{{$categorie->title}}</option>
                                     @endforeach
                                 </select>
@@ -87,6 +87,10 @@
                                 <th scope="col" style="width:10%">#</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Subtitle</th>
+                                @if (auth()->user()->id==1)
+                                <th scope="col">Poster</th>
+                                @endif
+                                <th scope="col">Last Update At ( UTC +08:00 )</th>
                                 <th scope="col" style="width:10%">Active</th>
                             </tr>
                         </thead>
@@ -97,6 +101,10 @@
                                     <td scope="row">{{$key+1}}</td>
                                     <td class="font-weight-bold">{{$row->title}}</td>
                                     <td>{{$row->subtitle}}</td>
+                                    @if (auth()->user()->id==1)
+                                    <td>{{$row->creator->name}}</td>
+                                    @endif
+                                    <td>{{date('M d, Y H:i',strtotime($row->updated_at))}}
                                     <td><button id='{{$key+1}}' class="btn btn-outline-primary btn-sm m-1 p-2 post_edit_btn" data-toggle="modal" data-target="#modal-edit-post-form" data-url='{{ route('post.update', $row->id) }}'><i class="fa-solid fa-pen-to-square"></i></button></td>
                                 </tr>
                                 @endforeach

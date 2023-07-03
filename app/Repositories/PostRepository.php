@@ -19,7 +19,7 @@ class PostRepository extends EloquentRepository
 
     public function getAllPost()
     {
-        return $this->model->orderBy('title')->get();
+        return $this->model->orderBy('updated_at','desc')->get();
     }
     public function getUserPost($created_by)
     {

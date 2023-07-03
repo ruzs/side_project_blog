@@ -16,7 +16,6 @@
                         <p>
                             {!! $row->content !!}
                         </p>
-                        
                         <p class="post-meta">
                             Posted by
                             <a class="text-dark font-weight-bold"> {{ $row->creator->name }} </a>
