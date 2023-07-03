@@ -1,12 +1,12 @@
 {{-- @section('post-form-modal') --}}
-<!-- Categorie Form Modal -->
-<div id="modal-new-categorie-form" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-categorie-form-label" aria-hidden="true">
-    <form action="{{ route('categorie.store') }}" method="post">
+<!-- Category Form Modal -->
+<div id="modal-new-category-form" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-category-form-label" aria-hidden="true">
+    <form action="{{ route('category.store') }}" method="post">
         @csrf
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content shadow-sm">
                 <div class="modal-header">
-                    <h3 id="modal-categorie-form-label" class="modal-title">Create Categorie</h3>
+                    <h3 id="modal-category-form-label" class="modal-title">Create Category</h3>
                     <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -46,19 +46,19 @@
 </script> --}}
 {{-- @endsection --}}
 
-<!-- Categorie All Modal -->
-<div id="modal-all-categorie-form" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-categorie-form-label" aria-hidden="true">
+<!-- Category All Modal -->
+<div id="modal-all-category-form" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-category-form-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl modal-xxl">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modal-categorie-form-label" class="modal-title">All Categorie</h3>
+                <h3 id="modal-category-form-label" class="modal-title">All Category</h3>
                 <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="col-12 table-responsive">
-                    <table id='categorie_edit_table' class="table text-center">
+                    <table id='category_edit_table' class="table text-center">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col" style="width:10%">#</th>
@@ -67,13 +67,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categories as $key => $categorie)
+                            @if (@$categories && count($categories))
+                            @foreach ($categories as $key => $category)
                             <tr>
                                 <td scope="row" >{{$key+1}}</td>
-                                <td class="font-weight-bold">{{$categorie->title}}</td>
-                                <td><button id='{{$key+1}}' class="btn btn-outline-primary btn-sm m-1 p-2 categorie_edit_btn" data-toggle="modal" data-target="#modal-edit-categorie-form" data-url='{{ route('categorie.update', $categorie->id) }}'><i class="fa-solid fa-pen-to-square"></i></button></td>
+                                <td class="font-weight-bold">{{$category->title}}</td>
+                                <td><button id='{{$key+1}}' class="btn btn-outline-primary btn-sm m-1 p-2 category_edit_btn" data-toggle="modal" data-target="#modal-edit-category-form" data-url='{{ route('category.update', $category->id) }}'><i class="fa-solid fa-pen-to-square"></i></button></td>
                             </tr>
                             @endforeach
+                            @else
+                            <tr>
+                                <td colspan='4'>
+                                    <a href="javascript:void(0)" class="nav-link disabled">Your Post not found</a>
+                                </td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -87,8 +95,8 @@
     </div>
 </div>
 
-<!-- Categorie Form Modal -->
-<div id="modal-edit-categorie-form" class="modal fade shadow-sm" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-categorie-form-label" aria-hidden="true">
+<!-- Category Form Modal -->
+<div id="modal-edit-category-form" class="modal fade shadow-sm" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-category-form-label" aria-hidden="true">
     <form action="#" method="post">
         @csrf
         @if (@$rows)
@@ -97,8 +105,8 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content shadow-sm">
                 <div class="modal-header">
-                    <h3 id="modal-edit-categorie-form-label" class="modal-title">Edit Categorie</h3>
-                    <button id="edit_categorie_delete" type="button" class="btn-delete-event btn btn-outline-secondary btn-sm ml-auto">
+                    <h3 id="modal-edit-category-form-label" class="modal-title">Edit Category</h3>
+                    <button id="edit_category_delete" type="button" class="btn-delete-event btn btn-outline-secondary btn-sm ml-auto">
                         <i class="fa fa-solid fa-trash"></i> Delete
                     </button>
                     <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">

@@ -6,26 +6,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Entities\Categorie;
-use App\Repositories\CategorieRepository;
+use App\Entities\Category;
+use App\Repositories\CategoryRepository;
 // use App\Repositories\ErrorLogRepository;
 
-use App\Http\Requests\CategorieFormRequest;
+use App\Http\Requests\CategoryFormRequest;
 
-class CategorieController extends Controller
+class CategoryController extends Controller
 {
 
     private $data;
     private $log_name;
-    private $categorie_repo;
+    private $category_repo;
     // private $errorlog_repo;
 
-    public function __construct(CategorieRepository $categorie_repo
+    public function __construct(CategoryRepository $category_repo
                                 // ErrorLogRepository $errorlog_repo
     )
     {
-        $this->log_name         = 'Categorie';
-        $this->categorie_repo        = $categorie_repo;
+        $this->log_name         = 'Category';
+        $this->category_repo        = $category_repo;
         // $this->errorlog_repo    = $errorlog_repo;
     }
 
@@ -37,7 +37,7 @@ class CategorieController extends Controller
 
     // public function index()
     // {
-    //     return view("categories.categorie_index",$this->data);
+    //     return view("categorys.category_index",$this->data);
     // }
 
     /**
@@ -48,7 +48,7 @@ class CategorieController extends Controller
 
     // public function lists(Request $request)
     // {
-    //     return $this->categorie_repo->getDatatable($request);
+    //     return $this->category_repo->getDatatable($request);
     // }
 
     /**
@@ -59,13 +59,13 @@ class CategorieController extends Controller
     // public function getFormData()
     // {
     //     $mode = config('constants.form_modes.' . getRouteNameMode() . '.label');
-    //     $title = $mode . ' Categorie';
-    //     $module_title = 'categories';
+    //     $title = $mode . ' Category';
+    //     $module_title = 'categorys';
     //     return [
     //         'header_title' => $title,
     //         'breadcrumbs'  => [
     //             'module'       => $module_title,
-    //             'module_route' => 'categorie.index',
+    //             'module_route' => 'category.index',
     //             'title'        => $title,
     //         ],
     //     ];
@@ -79,22 +79,22 @@ class CategorieController extends Controller
     // public function create()
     // {
     //     $this->data = $this->getFormData();
-    //     return view("categories.categorie_form", $this->data);
+    //     return view("categorys.category_form", $this->data);
     // }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\CategorieFormRequest  $request
+     * @param  \App\Http\Requests\CategoryFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategorieFormRequest $request)
+    public function store(CategoryFormRequest $request)
     {
         // 驗證
         $data = $request->validated();
         DB::beginTransaction();
         try {
-            $this->categorie_repo->save($data);
+            $this->category_repo->save($data);
             DB::commit();
         } catch (\Exception $e) {
             dd($e);
@@ -114,12 +114,12 @@ class CategorieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show(Categorie $categorie)
+    // public function show(Category $category)
     // {
     //     $this->data = $this->getFormData();
-    //     $this->data['row'] = $categorie;
-    //     $this->data['route_index'] = route('categorie.index');
-    //     return view("categories.categorie_form", $this->data);
+    //     $this->data['row'] = $category;
+    //     $this->data['route_index'] = route('category.index');
+    //     return view("categorys.category_form", $this->data);
     // }
 
     /**
@@ -128,31 +128,31 @@ class CategorieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function edit(Categorie $categorie)
+    // public function edit(Category $category)
     // {
         
-    //     $this->data['row'] = $categorie;
+    //     $this->data['row'] = $category;
     //     // dd($this->data);
-    //     return view("categories.categorie_form", $this->data);
+    //     return view("categorys.category_form", $this->data);
     // }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\CategorieFormRequest  $request
+     * @param  \App\Http\Requests\CategoryFormRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategorieFormRequest $request, Categorie $categorie)
+    public function update(CategoryFormRequest $request, Category $category)
     {
         $data = $request->validated();
         
         DB::beginTransaction();
         try {
             if (isset($data['delete'])) {
-                $categorie->delete();
+                $category->delete();
             }else{
-                $categorie->update($data);
+                $category->update($data);
             }
             DB::commit();
         } catch (\Exception $e) {
@@ -166,6 +166,6 @@ class CategorieController extends Controller
         return redirect()->route('home.index')->with('success', true);
     }
     public function data(Request $request) {
-        return $this->categorie_repo->getCategorie($request->id);
+        return $this->category_repo->getCategory($request->id);
     }
 }

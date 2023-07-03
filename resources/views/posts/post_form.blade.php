@@ -91,14 +91,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($rows as $key => $row)
+                            @if (@$rows && count($rows))
+                                @foreach ($rows as $key => $row)
+                                <tr>
+                                    <td scope="row">{{$key+1}}</td>
+                                    <td class="font-weight-bold">{{$row->title}}</td>
+                                    <td>{{$row->subtitle}}</td>
+                                    <td><button id='{{$key+1}}' class="btn btn-outline-primary btn-sm m-1 p-2 post_edit_btn" data-toggle="modal" data-target="#modal-edit-post-form" data-url='{{ route('post.update', $row->id) }}'><i class="fa-solid fa-pen-to-square"></i></button></td>
+                                </tr>
+                                @endforeach
+                            @else
                             <tr>
-                                <td scope="row">{{$key+1}}</td>
-                                <td class="font-weight-bold">{{$row->title}}</td>
-                                <td>{{$row->subtitle}}</td>
-                                <td><button id='{{$key+1}}' class="btn btn-outline-primary btn-sm m-1 p-2 post_edit_btn" data-toggle="modal" data-target="#modal-edit-post-form" data-url='{{ route('post.update', $row->id) }}'><i class="fa-solid fa-pen-to-square"></i></button></td>
+                                <td colspan='4'>
+                                    <a href="javascript:void(0)" class="nav-link disabled">Your Post not found</a>
+                                </td>
                             </tr>
-                            @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

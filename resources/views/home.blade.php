@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @include('posts.post_form')
-@include('categories.categorie_form')
+@include('categories.category_form')
 
 {{-- @section('modal')
 @yield('post-form-modal')
@@ -41,10 +41,10 @@
                         <button id='edit_post' class="btn btn-primary p-2 col-12 m-1" data-toggle="modal" data-target="#modal-all-post-form"><i class="fa-solid fa-pen-to-square"></i> Edit Post</button>
                     </div>
                     <div class="col-sm-3 col-12">
-                        <button id='create_categorie' class="btn btn-success p-2 col-12 m-1" data-toggle="modal" data-target="#modal-new-categorie-form"><i class="fa-solid fa-file"></i> New Categorie</button>
+                        <button id='create_category' class="btn btn-success p-2 col-12 m-1" data-toggle="modal" data-target="#modal-new-category-form"><i class="fa-solid fa-file"></i> New Category</button>
                     </div>
                     <div class="col-sm-3 col-12">
-                        <button id='edit_categorie' class="btn btn-primary p-2 col-12 m-1" data-toggle="modal" data-target="#modal-all-categorie-form"><i class="fa-solid fa-pen-to-square"></i> Edit Categorie</button>
+                        <button id='edit_category' class="btn btn-primary p-2 col-12 m-1" data-toggle="modal" data-target="#modal-all-category-form"><i class="fa-solid fa-pen-to-square"></i> Edit Category</button>
                     </div>
                 </div>
             </div>
@@ -106,12 +106,12 @@
         $('input[name=delete]').remove();
     });
 
-    // Categorie Edit
-    $(document).on('click','table tbody tr td .categorie_edit_btn',function () {
+    // Category Edit
+    $(document).on('click','table tbody tr td .category_edit_btn',function () {
         id=$(this).attr('id');
         // 表單網址
-        $('#modal-edit-categorie-form form').attr('action',$(this).data('url'));
-        categorie_edit_data()
+        $('#modal-edit-category-form form').attr('action',$(this).data('url'));
+        category_edit_data()
     });
     // 刪除鍵
     $('#edit_post_delete').on('click',function () {
@@ -148,9 +148,9 @@
     };
 
 
-    function categorie_edit_data() {
+    function category_edit_data() {
         $.ajax({
-            url: `{{ route('categorie.data') }}`,
+            url: `{{ route('category.data') }}`,
             type: "POST",
             dataType : 'json',
             data:{
@@ -159,7 +159,7 @@
             },
             success: function (res) {
                 console.log('res',res);
-                $('#modal-edit-categorie-form input[name=title]').val(res.title);
+                $('#modal-edit-category-form input[name=title]').val(res.title);
             },
             error: function (err) {
                 console.log('err',err);

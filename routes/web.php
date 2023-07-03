@@ -31,15 +31,15 @@ Route::get('/', 'HomeController@home');
 // 需經過驗證
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('home', 'HomeController')->only([
-        'index', 'show', 'store', 'edit', 'update',
+        'index', 'show',
     ]);
     Route::post('post/data', ['as' => 'post.data', 'uses' => 'PostController@data']);
     Route::resource('post', 'PostController')->only([
         'store', 'edit', 'update', 'show'
     ]);
     
-    Route::post('categorie/data', ['as' => 'categorie.data', 'uses' => 'CategorieController@data']);
-    Route::resource('categorie', 'CategorieController')->only([
+    Route::post('category/data', ['as' => 'category.data', 'uses' => 'CategoryController@data']);
+    Route::resource('category', 'CategoryController')->only([
         'store', 'edit', 'update', 'show'
     ]);
     

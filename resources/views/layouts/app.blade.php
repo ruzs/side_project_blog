@@ -54,6 +54,7 @@
                         {{-- <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">About</a></li>
                         <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Sample Post</a></li>
                         <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Contact</a></li> --}}
+                        {{-- @dd(request()->route()->getName()) --}}
                         @guest
                             @if (!request()->route()->getName() =='login')
                             <li class="nav-item">

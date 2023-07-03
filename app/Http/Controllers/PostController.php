@@ -154,7 +154,10 @@ class PostController extends Controller
         DB::beginTransaction();
         try {
             if (isset($data['delete'])) {
-                $post->delete();
+                dd($data,$post,auth()->user()->id);
+                if ($post->created_by == auth()->user()->id || auth()->user()->id == 1) {
+                    $post->delete();
+                }
             }else{
                 $post->update($data);
             }
@@ -172,7 +175,7 @@ class PostController extends Controller
     public function data(Request $request) {
         $this->data=[
             'row'=>$this->post_repo->getPost($request->id),
-            'categorys'=>$this->category_repo->getAllCategory(),
+            'categories'=>$this->category_repo->getAllCategory(),
         ];
         return $this->data;
     }
