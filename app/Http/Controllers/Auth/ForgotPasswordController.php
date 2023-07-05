@@ -22,9 +22,10 @@ class ForgotPasswordController extends Controller
     |
     */
 
-    public function showLinkRequestForm()
+    public function showLinkRequestForm(Request $request)
     {
-        return view('auth.passwords.email',['bg' =>'assets/img/contact-bg.jpg']);
+        
+        return view('auth.passwords.email',['bg' =>'assets/img/contact-bg.jpg','token'=>$request->token]);
     }
 
     /**

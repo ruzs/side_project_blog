@@ -68,7 +68,7 @@
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a id=fpf class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
@@ -93,5 +93,7 @@
             $("input[name='password']").attr('type', 'password');
         }
     }
+    fpfHTML = $('#fpf').attr('href');
+    $('#fpf').attr('href',fpfHTML+'?token='+$("input[name='_token']").val())
 </script>
 @endsection
