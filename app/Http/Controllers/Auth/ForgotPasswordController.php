@@ -24,7 +24,6 @@ class ForgotPasswordController extends Controller
 
     public function showLinkRequestForm(Request $request)
     {
-        
         return view('auth.passwords.email',['bg' =>'assets/img/contact-bg.jpg','token'=>$request->token]);
     }
 

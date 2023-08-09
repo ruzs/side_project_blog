@@ -5,24 +5,19 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
+                <div class="card-header">{{ __('Reset Password') }} (Step.1)</div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    <form method="GET" action="{{ route('password.reset', $token) }}">
+                    <form id='formUrl' method="GET" action="{{ route('password.reset', $token) }}">
                         @csrf
-
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right"><span class="required">*</span>Name</label>
-
                             <div class="col-md-6">
                                 <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Name" required autocomplete="name" autofocus>
-
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -30,7 +25,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <label for="account" class="col-md-4 col-form-label text-md-right"><span class="required">*</span>Account</label>
                             <div class="col-md-6">
@@ -42,13 +36,10 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right"><span class="required">*</span>{{ __('E-Mail Address') }}</label>
-
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('E-Mail Address') }}" required autocomplete="email" autofocus>
-
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -56,7 +47,11 @@
                                 @enderror
                             </div>
                         </div>
-
+                        @if (session('error'))
+                        <div class="form-group row">
+                            <span class="required text-center">{{session('message')}}</span>
+                        </div>
+                        @endif
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -68,4 +63,9 @@
         </div>
     </div>
 </div>
+<script>
+    $('#formUrl').attr('action',$('input[name=_token]').val())
+    console.log('form',$('#formUrl').attr('action'));
+    console.log('input',$('input[name=_token]').val());
+</script>
 @endsection
