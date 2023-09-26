@@ -13,7 +13,7 @@
                         </div>
                     @endif
                     <form id='formUrl' method="GET" action="{{ route('password.reset', $token) }}">
-                        @csrf
+                        {{-- @csrf --}}
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right"><span class="required">*</span>Name</label>
                             <div class="col-md-6">

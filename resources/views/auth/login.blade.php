@@ -67,11 +67,11 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                @if (Route::has('password.request'))
+                                {{-- @if (Route::has('password.request'))
                                     <a id=fpf class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
-                                @endif
+                                @endif --}}
                                 @if (Route::has('register'))
                                     <a class="btn btn-success btn-sm float-right mt-2" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 @endif

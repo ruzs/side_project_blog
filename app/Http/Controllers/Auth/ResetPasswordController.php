@@ -32,13 +32,16 @@ class ResetPasswordController extends Controller
 
     public function showResetForm(Request $request, $token = null, User $user)
     {
+        // dd(20);
         $rules=[
-            "_token"    => "required",
+            // "token"    => "required",
             'name'      => 'required|string|min:3|max:128',
             'account'   => 'required|string|max:128',
             'email'     => 'required|email|max:128',
         ];
         $this->data=$request->validate($rules);
+        $this->data['token']=$token;
+        // dd($this->data);
         $user_a=$user->where('name', $this->data['name'])->where('account', $this->data['account'])->where('email', $this->data['email'])->get();
         if (count($user_a) == 0) {
             return redirect()->back()->with(['error' => true, 'message' => 'No matching Data found']);
@@ -59,10 +62,10 @@ class ResetPasswordController extends Controller
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
+        // $request->token=$request->_token;
         dd($request);
         $response = $this->broker()->reset(
             $this->credentials($request), function ($user, $password) {
-                dd(20);
                 $this->resetPassword($user, $password);
             }
         );
