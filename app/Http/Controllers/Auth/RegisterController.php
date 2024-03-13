@@ -65,11 +65,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // if ($data['friend_code'] == "trykankan") {
+        //     dd(99);
+        // }
+        // dd($data);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'account' => $data['account'],
             'password' => Hash::make($data['password']),
+            'role' => $data['friend_code'] == "trykankan"?2:0,
         ]);
     }
 }

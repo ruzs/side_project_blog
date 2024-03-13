@@ -61,6 +61,17 @@
                                 </div>
                                 <input type="checkbox" class="col-md-2" style="max-width:20px" onclick="showPasswordConfirmation()">
                             </div>
+                            <div class="form-group row">
+                                <label for="friend_code" class="col-md-4 col-form-label text-md-right">Friend code</label>
+                                <div class="col-md-6">
+                                    <input id="friend_code" type="text" class="form-control @error('friend_code') is-invalid @enderror" name="friend_code" placeholder="Friend code" autocomplete="friend_code">
+                                    @error('friend_code')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-success">

@@ -51,8 +51,8 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('home.index') }}">Home</a></li>
-                        {{-- <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">About</a></li>
-                        <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Sample Post</a></li>
+                        <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ url('/') }}">Chat</a></li>
+                        {{-- <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Sample Post</a></li>
                         <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Contact</a></li> --}}
                         {{-- @dd(request()->route()->getName()) --}}
                         @guest
