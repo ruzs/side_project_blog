@@ -72,7 +72,7 @@
                             <tr>
                                 <td scope="row" >{{$key+1}}</td>
                                 <td class="font-weight-bold">{{$category->title}}</td>
-                                <td><button id='{{$key+1}}' class="btn btn-outline-primary btn-sm m-1 p-2 category_edit_btn" data-toggle="modal" data-target="#modal-edit-category-form" data-url='{{ route('category.update', $category->id) }}'><i class="fa-solid fa-pen-to-square"></i></button></td>
+                                <td><button class="btn btn-outline-primary btn-sm m-1 p-2 category_edit_btn" data-toggle="modal" data-target="#modal-edit-category-form" data-id='{{$category->id}}' data-url='{{ route('category.update', $category->id) }}'><i class="fa-solid fa-pen-to-square"></i></button></td>
                             </tr>
                             @endforeach
                             @else

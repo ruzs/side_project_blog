@@ -89,10 +89,9 @@
 <script>
     // Post Edit
     $(document).on('click','table tbody tr td .post_edit_btn',function () {
-        id=$(this).attr('id');
         // 表單網址
         $('#modal-edit-post-form form').attr('action',$(this).data('url'));
-        post_edit_data()
+        post_edit_data($(this).attr('data-id'))
     });
     // reset 分類select
     $('#edit_post_close , #edit_post_close_top').on('click',function(){
@@ -108,10 +107,9 @@
 
     // Category Edit
     $(document).on('click','table tbody tr td .category_edit_btn',function () {
-        id=$(this).attr('id');
         // 表單網址
         $('#modal-edit-category-form form').attr('action',$(this).data('url'));
-        category_edit_data()
+        category_edit_data($(this).attr('data-id'))
     });
     // 刪除鍵
     $('#edit_post_delete').on('click',function () {
@@ -122,7 +120,7 @@
         $('input[name=delete]').remove();
     });
 
-    function post_edit_data() {
+    function post_edit_data(id=null) {
         $.ajax({
             url: `{{ route('post.data') }}`,
             type: "POST",
@@ -135,10 +133,15 @@
                 console.log('res',res);
                 $('#modal-edit-post-form input[name=title]').val(res.row.title);
                 $('#modal-edit-post-form input[name=subtitle]').val(res.row.subtitle);
+                $('#modal-edit-post-form select[name=category_id]').append(`<option value="0">無分類</option>`);
                 $.each(res.categories,function (index,value) {
                     $('#modal-edit-post-form select[name=category_id]').append(`<option value="${value.id}">${value.title}</option>`);
                 })
-                $(`#modal-edit-post-form select[name=category_id] option[value=${res.row.category_id}]`).attr('selected',1)
+                if (res.row.category_id) {
+                    $(`#modal-edit-post-form select[name=category_id] option[value=${res.row.category_id}]`).attr('selected',1)
+                }else{
+                    console.log('無分類');
+                }
                 $('#modal-edit-post-form textarea[name=content]').val(res.row.content);
             },
             error: function (err) {
@@ -146,9 +149,8 @@
             }
         })
     };
-
-
-    function category_edit_data() {
+    
+    function category_edit_data(id=null) {
         $.ajax({
             url: `{{ route('category.data') }}`,
             type: "POST",
