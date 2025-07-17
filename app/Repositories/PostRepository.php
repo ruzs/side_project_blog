@@ -17,15 +17,15 @@ class PostRepository extends EloquentRepository
         $this->model = $model;
     }
 
-    public function getAllPost()
+    public function getAll()
     {
         return $this->model->orderBy('updated_at','desc')->get();
     }
-    public function getUserPost($created_by)
+    public function getByUserId($created_by)
     {
         return $this->model->where('created_by', $created_by)->get();
     }
-    public function getPost($id)
+    public function getById($id)
     {
         return $this->model->where('id', $id)->first();
     }

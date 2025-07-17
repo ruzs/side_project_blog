@@ -2,6 +2,7 @@
 
 @include('posts.post_form')
 @include('categories.category_form')
+@include('users.user_form')
 
 {{-- @section('modal')
 @yield('post-form-modal')
@@ -45,6 +46,14 @@
                     </div>
                     <div class="col-sm-3 col-12">
                         <button id='edit_category' class="btn btn-primary p-2 col-12 m-1" data-toggle="modal" data-target="#modal-all-category-form"><i class="fa-solid fa-pen-to-square"></i> Edit Category</button>
+                    </div>
+                    @if(auth()->user()->id == 1)
+                    <div class="col-sm-3 col-12">
+                        <button id='create_user' class="btn btn-success p-2 col-12 m-1" data-toggle="modal" data-target="#modal-new-user-form"><i class="fa-solid fa-file"></i> New User</button>
+                    </div>
+                    @endif
+                    <div class="col-sm-3 col-12">
+                        <button id='edit_user' class="btn btn-primary p-2 col-12 m-1" data-toggle="modal" data-target="#modal-all-user-form"><i class="fa-solid fa-pen-to-square"></i> Edit User</button>
                     </div>
                 </div>
             </div>
@@ -120,6 +129,13 @@
         $('input[name=delete]').remove();
     });
 
+    // User Edit
+    $(document).on('click','table tbody tr td .user_edit_btn',function () {
+        // 表單網址
+        $('#modal-edit-user-form form').attr('action',$(this).data('url'));
+        user_edit_data($(this).attr('data-id'))
+    });
+
     function post_edit_data(id=null) {
         $.ajax({
             url: `{{ route('post.data') }}`,
@@ -162,6 +178,29 @@
             success: function (res) {
                 console.log('res',res);
                 $('#modal-edit-category-form input[name=title]').val(res.title);
+            },
+            error: function (err) {
+                console.log('err',err);
+            }
+        })
+    };
+    function user_edit_data(id=null) {
+        $('#modal-edit-user-form input[name=name]').val("");
+        $('#modal-edit-user-form input[name=account]').val("");
+        $('#modal-edit-user-form input[name=password]').val("");
+        $('#modal-edit-user-form input[name=password_confirmation]').val("");
+        $.ajax({
+            url: `{{ route('user.data') }}`,
+            type: "POST",
+            dataType : 'json',
+            data:{
+                _token: "{{ csrf_token() }}",
+                id: id,
+            },
+            success: function (res) {
+                console.log('res',res);
+                $('#modal-edit-user-form input[name=name]').val(res.name);
+                $('#modal-edit-user-form input[name=account]').val(res.account);
             },
             error: function (err) {
                 console.log('err',err);

@@ -7,12 +7,15 @@ use App\Entities\Post;
 use App\Repositories\PostRepository;
 use App\Entities\Category;
 use App\Repositories\CategoryRepository;
+use App\Entities\User;
+use App\Repositories\UserRepository;
 
 class HomeController extends Controller
 {
     private $data;
     private $post_repo;
     private $category_repo;
+    private $user_repo;
     
 
     /**
@@ -20,11 +23,14 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(PostRepository $post_repo,CategoryRepository $category_repo)
+    public function __construct(PostRepository $post_repo,
+                                CategoryRepository $category_repo,
+                                UserRepository $user_repo)
     {
         // $this->middleware('auth');
         $this->post_repo        = $post_repo;
         $this->category_repo   = $category_repo;
+        $this->user_repo   = $user_repo;
     }
 
     /**
@@ -34,27 +40,30 @@ class HomeController extends Controller
      */
     public function home() 
     {
-        $rows=$this->post_repo->getAllPost();
+        $rows=$this->post_repo->getAll();
         $this->data=[
             'bg'=>'assets/img/home-bg.jpg',
             'rows'=> $rows,
         ];
         return view('index',$this->data);
     }
+    
     public function index()
     {
         if (auth()->user()->id ==1) {
-            $rows=$this->post_repo->getAllPost();
-            $categories=$this->category_repo->getAllCategory();
+            $rows=$this->post_repo->getAll();
+            $categories=$this->category_repo->getAll();
         }else{
-            $rows=$this->post_repo->getUserPost(auth()->user()->id);
-            $categories=$this->category_repo->getUserCategory(auth()->user()->id);
+            $rows=$this->post_repo->getByUserId(auth()->user()->id);
+            $categories=$this->category_repo->getByUserId(auth()->user()->id);
         }
         $this->data=[
             'bg'=>'assets/img/about-bg.jpg',
             'rows'=> $rows,
             'categories'=>$categories,
-            'all_categories'=>$this->post_repo->getAllPost(),
+            'posts'=>$this->post_repo->getAll(),
+            'users'=>$this->user_repo->getAll(),
+            'user'=>$this->user_repo->getById(auth()->user()->id),
         ];
         return view('home',$this->data);
     }
@@ -66,5 +75,15 @@ class HomeController extends Controller
             'row'=> $home,
         ];
         return view('posts.post_index', $this->data);
+    }
+    
+    public function shareholder()
+    {
+        
+        $this->data=[
+            'bg'=>'assets/img/post-bg.jpg',
+            'row'=> "",
+        ];
+        return view('shareholder', $this->data);
     }
 }

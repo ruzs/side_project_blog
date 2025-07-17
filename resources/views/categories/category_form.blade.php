@@ -129,7 +129,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="row w-100 justify-content-between">
-                        <button id='edit_close' type="button" class="btn btn-danger p-2 col-4 col-lg-auto" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger p-2 col-4 col-lg-auto" data-dismiss="modal">Close</button>
                         <div class="col-8 col-lg-3">
                             <div class="row justify-content-end">
                                 <input type="submit" value="Submit" class="btn btn-primary p-2 col-auto">

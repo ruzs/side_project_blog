@@ -8,7 +8,7 @@ use App\DataTables\CoreDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class NoteRepository extends EloquentRepository
+class UserRepository extends EloquentRepository
 {
     protected $model;
 
@@ -20,5 +20,13 @@ class NoteRepository extends EloquentRepository
     public function getAll()
     {
         return $this->model->orderBy('name')->get();
+    }
+    public function getByUserId($created_by)
+    {
+        return $this->model->where('created_by', $created_by)->get();
+    }
+    public function getById($id)
+    {
+        return $this->model->where('id', $id)->first();
     }
 }

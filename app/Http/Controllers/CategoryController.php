@@ -97,8 +97,8 @@ class CategoryController extends Controller
             $this->category_repo->save($data);
             DB::commit();
         } catch (\Exception $e) {
-            dd($e);
             DB::rollBack();
+            dd($e);
             // $this->errorlog_repo->saveError($e);
             return redirect()->back()->with('error', true);
         }
@@ -157,6 +157,7 @@ class CategoryController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            dd($e);
             // $this->errorlog_repo->saveError($e);
             return redirect()->back()->with('error', true);
         }
@@ -166,6 +167,6 @@ class CategoryController extends Controller
         return redirect()->route('home.index')->with('success', true);
     }
     public function data(Request $request) {
-        return $this->category_repo->getCategory($request->id);
+        return $this->category_repo->getById($request->id);
     }
 }

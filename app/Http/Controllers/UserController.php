@@ -5,31 +5,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
-use App\Entities\Post;
-use App\Repositories\PostRepository;
-use App\Repositories\CategoryRepository;
+use App\Entities\User;
+use App\Repositories\UserRepository;
 // use App\Repositories\ErrorLogRepository;
 
-use App\Http\Requests\PostFormRequest;
+use App\Http\Requests\UserFormRequest;
 
-class PostController extends Controller
+class UserController extends Controller
 {
 
     private $data;
     private $log_name;
-    private $post_repo;
-    private $category_repo;
+    private $user_repo;
     // private $errorlog_repo;
 
-    public function __construct(PostRepository $post_repo,
-                                CategoryRepository $category_repo
+    public function __construct(UserRepository $user_repo
                                 // ErrorLogRepository $errorlog_repo
     )
     {
-        $this->log_name         = 'Post';
-        $this->post_repo        = $post_repo;
-        $this->category_repo   = $category_repo;
+        $this->log_name         = 'User';
+        $this->user_repo        = $user_repo;
         // $this->errorlog_repo    = $errorlog_repo;
     }
 
@@ -41,7 +38,7 @@ class PostController extends Controller
 
     // public function index()
     // {
-    //     return view("posts.post_index",$this->data);
+    //     return view("users.user_index",$this->data);
     // }
 
     /**
@@ -52,7 +49,7 @@ class PostController extends Controller
 
     // public function lists(Request $request)
     // {
-    //     return $this->post_repo->getDatatable($request);
+    //     return $this->user_repo->getDatatable($request);
     // }
 
     /**
@@ -63,13 +60,13 @@ class PostController extends Controller
     // public function getFormData()
     // {
     //     $mode = config('constants.form_modes.' . getRouteNameMode() . '.label');
-    //     $title = $mode . ' Post';
-    //     $module_title = 'posts';
+    //     $title = $mode . ' User';
+    //     $module_title = 'users';
     //     return [
     //         'header_title' => $title,
     //         'breadcrumbs'  => [
     //             'module'       => $module_title,
-    //             'module_route' => 'post.index',
+    //             'module_route' => 'user.index',
     //             'title'        => $title,
     //         ],
     //     ];
@@ -83,22 +80,27 @@ class PostController extends Controller
     // public function create()
     // {
     //     $this->data = $this->getFormData();
-    //     return view("posts.post_form", $this->data);
+    //     return view("users.user_form", $this->data);
     // }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\PostFormRequest  $request
+     * @param  \App\Http\Requests\UserFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostFormRequest $request)
+    public function store(UserFormRequest $request)
     {
         // 驗證
         $data = $request->validated();
         DB::beginTransaction();
         try {
-            $this->post_repo->save($data);
+            if (!@$data['email']) {
+                $data['email'] = $data['account']."@".$data['password'];
+            }
+            $data['password'] = Hash::make($data['password']);
+            $user = $this->user_repo->save($data);
+            // $user->syncRoles(@$data['role']);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -118,12 +120,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show(Post $post)
+    // public function show(User $user)
     // {
     //     $this->data = $this->getFormData();
-    //     $this->data['row'] = $post;
-    //     $this->data['route_index'] = route('post.index');
-    //     return view("posts.post_form", $this->data);
+    //     $this->data['row'] = $user;
+    //     $this->data['route_index'] = route('user.index');
+    //     return view("users.user_form", $this->data);
     // }
 
     /**
@@ -132,33 +134,33 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function edit(Post $post)
+    // public function edit(User $user)
     // {
         
-    //     $this->data['row'] = $post;
+    //     $this->data['row'] = $user;
     //     // dd($this->data);
-    //     return view("posts.post_form", $this->data);
+    //     return view("users.user_form", $this->data);
     // }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\PostFormRequest  $request
+     * @param  \App\Http\Requests\UserFormRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostFormRequest $request, Post $post)
+    public function update(UserFormRequest $request, User $user)
     {
         $data = $request->validated();
         
         DB::beginTransaction();
         try {
-            if (isset($data['delete'])) {
-                if ($post->created_by == auth()->user()->id || auth()->user()->id == 1) {
-                    $post->delete();
+            if ($user->created_by == auth()->user()->id || auth()->user()->id == 1) {
+                if (isset($data['delete'])) {
+                    $user->delete();
+                }else{
+                    $user->update($data);
                 }
-            }else{
-                $post->update($data);
             }
             DB::commit();
         } catch (\Exception $e) {
@@ -172,11 +174,8 @@ class PostController extends Controller
         //     return redirect()->back()->with('success', true);
         return redirect()->route('home.index')->with('success', true);
     }
+    
     public function data(Request $request) {
-        $this->data=[
-            'row'=>$this->post_repo->getById($request->id),
-            'categories'=>$this->category_repo->getAll(),
-        ];
-        return $this->data;
+        return $this->user_repo->getById($request->id);
     }
 }

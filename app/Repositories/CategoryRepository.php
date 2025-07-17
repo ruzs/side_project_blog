@@ -17,15 +17,15 @@ class CategoryRepository extends EloquentRepository
         $this->model = $model;
     }
 
-    public function getAllCategory()
+    public function getAll()
     {
         return $this->model->orderBy('created_at','asc')->get();
     }
-    public function getUserCategory($created_by)
+    public function getByUserId($created_by)
     {
         return $this->model->where('created_by', $created_by)->get();
     }
-    public function getCategory($id)
+    public function getById($id)
     {
         return $this->model->where('id', $id)->first();
     }

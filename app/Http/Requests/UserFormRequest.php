@@ -27,7 +27,7 @@ class UserFormRequest extends FormRequest
             'name'      => 'required|string|max:128',
             'account'   => 'required|string|max:128',
             'password'  => 'nullable|string|min:8|max:128|confirmed',
-            'email'     => 'required|email|max:128',
+            'email'     => 'nullable|email|max:128',
             'role'      => 'nullable|array',
             'role.*'    => 'nullable|int',
         ];

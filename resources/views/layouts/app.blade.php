@@ -40,6 +40,7 @@
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
                 <a class="navbar-brand" href="{{ url('/') }}">BLOG</a>
+                <a class="navbar-brand" href="{{ route('shareholder.index') }}">Shareholder</a>
                 <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
@@ -51,12 +52,12 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('home.index') }}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ url('/') }}">Chat</a></li>
+                        <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('shareholder.index') }}">Shareholder</a></li>
                         {{-- <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Sample Post</a></li>
                         <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Contact</a></li> --}}
-                        {{-- @dd(request()->route()->getName()) --}}
+                        
                         @guest
-                            @if (!request()->route()->getName() =='login')
+                            @if (!request()->route()->getName() =="login")
                             <li class="nav-item">
                                 <a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>

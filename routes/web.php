@@ -27,9 +27,13 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 
 // Route::get('/index', function () {return view('index');})->name('index');
 Route::get('/', 'HomeController@home');
+Route::get('/shareholder', 'ShareholderController@index')->name('shareholder.index');
 
 // 需經過驗證
 Route::group(['middleware' => 'auth'], function () {
+    Route::resource('shareholder', 'ShareholderController')->only([
+        'store', 'edit', 'update', 'show'
+    ]);
     Route::resource('home', 'HomeController')->only([
         'index', 'show',
     ]);
@@ -41,6 +45,11 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::post('category/data', ['as' => 'category.data', 'uses' => 'CategoryController@data']);
     Route::resource('category', 'CategoryController')->only([
+        'store', 'edit', 'update', 'show'
+    ]);
+    
+    Route::post('user/data', ['as' => 'user.data', 'uses' => 'UserController@data']);
+    Route::resource('user', 'UserController')->only([
         'store', 'edit', 'update', 'show'
     ]);
     

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+    <title>Blog</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <!-- Styles -->
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+
+    {{-- JS --}}
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="{{asset('js/scripts.js')}}"></script>
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('plugins/select2/js/i18n/zh-TW.js') }}"></script>
+    <style>
+        header.masthead{
+            height: 100px;!important
+            
+            padding-top: 50px;!important
+            padding-bottom: 50px;!important
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="{{ url('/') }}">Shareholder</a>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarResponsive">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto"></ul>
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                        <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('home.index') }}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('shareholder.index') }}">Chat</a></li>
+                        {{-- <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Sample Post</a></li>
+                        <li class="nav-item"><a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Contact</a></li> --}}
+                        {{-- @dd(request()->route()->getName()) --}}
+                        @guest
+                            <li class="nav-item">
+                                <a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            {{-- @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif --}}
+                        @else
+                        {{-- <li class="nav-item">
+                            <a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('logout') }}">{{ __('Logout') }}</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                        </li> --}}
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="after:unset">
+                                {{ auth()->user()->name }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item nav-link" href="{{ route('logout') }}" onclick="$('#logout-form').submit();">{{ __('Logout') }}</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                            </div>
+                        </li>
+                        @endguest
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <header class="masthead" style="background-image: url({{@asset($bg)}})">
+            {{-- <div class="row justify-content-center"> --}}
+                <div class="col-md-10 col-lg-8 col-xl-7 m-auto">
+                    <div class="site-heading">
+                        <a href="{{route('home.index')}}" class="subheading text-white">
+                            <h1>
+                                Shareholder
+                            </h1>
+                        </a>
+                    </div>
+                </div>
+            {{-- </div> --}}
+        </header>
+        <main class="py-4">
+            @yield('content')
+            <div class="flex-center position-ref full-height">
+            <!-- Main Content-->
+                <div class="container px-4 px-lg-5">
+                    <div class="row gx-4 gx-lg-5 justify-content-center">
+                        <div class="col-12 table-responsive">
+                            <h1 class="col-12 text-center">佺益電動麻將桌股東大會</h1>
+                            <h1 class="col-12 text-center">目前總積分</h1>
+                            <table id='user_edit_table' class="table text-center">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" style="width:10%">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Point</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($points)
+                                    @foreach ($points as $key => $point)
+                                    <tr>
+                                        <td scope="row" >{{$key+1}}</td>
+                                        <td class="font-weight-bold"></td>
+                                        <td class="font-weight-bold"></td>
+                                    </tr>
+                                    @endforeach
+                                    
+                                    @else
+                                    {{-- <tr>
+                                        <td scope="row" >1</td>
+                                        <td class="font-weight-bold">Eddie</td>
+                                        <td class="font-weight-bold">30</td>
+                                    </tr> --}}
+                                    
+                                    <tr>
+                                        <td colspan='4'>
+                                            <a href="javascript:void(0)" class="nav-link disabled">Your point not found</a>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                        @if(auth()->user())
+                        <div class="col-12 row justify-content-center">
+                            <h1 class="col-12 text-center">此次積分</h1>
+                            <h2 class="col-12 text-center text-secondary">底:2點 台:1點</h2>
+                            <button id="addplayer"class="col-2">+</button>
+                            <form id="point" action="{{route('shareholder.store')}}" method="post" class="flex-wrap py-4">
+                                @csrf
+                                <div class="input-group col-12 row player flex-wrap my-2">
+                                    <div class="col-12">
+                                        <label for="player1" class="col-3">名 :</label>
+                                        <input type="text" name="player1" id="player1" class="col-8">
+                                    </div>
+                                    <div class="col-12 mb-2">
+                                        <label for="point1" class="col-3">分 :</label>
+                                        <input type="number" name="point1" id="point1" class="col-8">
+                                    </div>
+                                    <hr>
+                                </div>
+                                <button class="btn btn-primary mt-2">Submit</button>
+                            </form>
+                        </div>
+                        @else
+                        <h2 class="col-12 text-center">登記積分，請先右上角登入</h2>
+                        @endif
+                        <a href="http://atawmj.org.tw/mjking.htm" target="black" class="btn btn-lg btn-success">台數算法</a>
+                    </div>
+                </div>
+                <!-- Footer-->
+                <footer class="border-top">
+                    <div class="container px-4 px-lg-5">
+                        <div class="row gx-4 gx-lg-5 justify-content-center">
+                            <div class="col-md-10 col-lg-8 col-xl-7">
+                                <div class="small text-center text-muted fst-italic">Copyright &copy; Your Shareholder Website {{date('Y')}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let playerCount = 1
+        $("#addplayer").on("click",function () {
+            // $(".player").last().clone().insertAfter($(".player").last()).find("input").val('')
+            playerCount++;
+            let $last = $(".player").last();
+            let $clone = $last.clone();
+
+            // 更新 input 的 id 和清空值
+            $clone.find('input[type="text"]').attr('id', 'player' + playerCount).val('').attr('name', 'player' + playerCount).val('');
+            $clone.find('input[type="number"]').attr('id', 'point' + playerCount).val('').attr('name', 'point' + playerCount).val('');
+
+            // 更新 label 的 for 屬性
+            $clone.find('label[for^="player"]').attr('for', 'player' + playerCount);
+            $clone.find('label[for^="point"]').attr('for', 'point' + playerCount);
+
+            $clone.insertAfter($last);
+        })
+    </script>
+</body>
+
+</html>
