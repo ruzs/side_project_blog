@@ -156,28 +156,32 @@
                         <div class="col-12 row justify-content-center">
                             <h1 class="col-12 text-center">此次積分</h1>
                             <h2 class="col-12 text-center text-secondary">底:2點 台:1點</h2>
-                            <button id="add_guest"class="col-2">+</button>
+                            <button id="add_guest"class="btn btn-lg btn-primary col-6 col-sm-3 fs-1">+</button>
                             <form id="point" action="{{route('shareholder.store')}}" method="post" class="flex-wrap py-4">
                                 @csrf
                                 @foreach ($shareholders as $key=> $shareholder)
                                 <div class="input-group col-12 row player flex-wrap my-2">
-                                    <div class="col-12">
-                                        <label for="point{{$shareholder->id}}" class="col-3 text-right">{{$shareholder->name}} :</label>
-                                        <input type="number" name="point{{$shareholder->id}}" id="point{{$shareholder->id}}" class="col-8">
+                                    <div class="col-12 row">
+                                        <label for="point{{$shareholder->id}}" class="col-6 text-right">{{$shareholder->name}} :</label>
+                                        <input type="number" name="point{{$shareholder->id}}" id="point{{$shareholder->id}}" class="col-6">
                                     </div>
-                                    <hr>
+                                    <hr class="mt-2">
                                 </div>
                                 @endforeach
-                                <div class="input-group col-12 row guest flex-wrap my-2">
-                                    <div class="col-12">
-                                        <label for="guest0" class="col-3 text-right">名 :</label>
-                                        <input type="text" name="guest0" id="guest0" class="col-8">
+                                <div class="row col-12 guest">
+                                    <div class="input-group col-12 row flex-wrap my-2">
+                                        <div class="col-12 row">
+                                            <label for="guest0" class="col-6 text-right">名 :</label>
+                                            <input type="text" name="guest0" id="guest0" class="col-6">
+                                        </div>
                                     </div>
-                                    <div class="col-12 mb-2">
-                                        <label for="guest_point0" class="col-3 text-right">分 :</label>
-                                        <input type="number" name="guest_point0" id="guest_point0" class="col-8">
+                                    <div class="input-group col-12 row flex-wrap my-2">
+                                        <div class="col-12 row mt-2">
+                                            <label for="guest_point0" class="col-6 text-right">分 :</label>
+                                            <input type="number" name="guest_point0" id="guest_point0" class="col-6">
+                                        </div>
                                     </div>
-                                    <hr>
+                                    <hr class="mt-2">
                                 </div>
                                 <button class="btn btn-primary mt-2">Submit</button>
                             </form>
