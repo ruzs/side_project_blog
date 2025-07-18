@@ -29,4 +29,8 @@ class UserRepository extends EloquentRepository
     {
         return $this->model->with('userRoles')->where('id', $id)->first();
     }
+    public function getByUserRole()
+    {
+        return $this->model->with('hasRoles')->get();
+    }
 }

@@ -41,7 +41,7 @@
         }
     </style>
 </head>
-
+{{-- @dd("shareholders",$shareholders) --}}
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
@@ -122,13 +122,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($points)
-                                    @foreach ($points as $key => $point)
+                                    @if (@$shareholders)
+                                    @foreach ($shareholders as $key => $shareholder)
+                                    {{-- @dd($shareholder,$shareholder->hasRoles) --}}
+                                    @if (count($shareholder->hasRoles) != 0)
                                     <tr>
                                         <td scope="row" >{{$key+1}}</td>
-                                        <td class="font-weight-bold"></td>
-                                        <td class="font-weight-bold"></td>
+                                        <td class="font-weight-bold">{{$shareholder->name}}</td>
+                                        <td class="font-weight-bold">0</td>
                                     </tr>
+                                    @endif
                                     @endforeach
                                     
                                     @else
