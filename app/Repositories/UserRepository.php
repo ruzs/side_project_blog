@@ -19,7 +19,7 @@ class UserRepository extends EloquentRepository
     
     public function getAll()
     {
-        return $this->model->orderBy('name')->get();
+        return $this->model->orderBy('id','asc')->get();
     }
     public function getByUserId($created_by)
     {
@@ -27,6 +27,6 @@ class UserRepository extends EloquentRepository
     }
     public function getById($id)
     {
-        return $this->model->where('id', $id)->first();
+        return $this->model->with('userRoles')->where('id', $id)->first();
     }
 }

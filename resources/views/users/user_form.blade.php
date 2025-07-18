@@ -26,15 +26,17 @@
                         <div class="col-xl-8">
                             <div class="form-group">
                                 <label class="font-weight-bold"><span class="required">*</span>Password</label>
-                                <input name="password" class="form-control" placeholder="Password" type="text">
+                                <input name="password" class="form-control" placeholder="Password" type="password">
                             </div>
                         </div>
+                        <input type="checkbox" class="col-md-2" style="max-width:20px" onclick="showPassword()">
                         <div class="col-xl-8">
                             <div class="form-group">
                                 <label class="font-weight-bold"><span class="required">*</span>Password Confirmation</label>
-                                <input name="password_confirmation" class="form-control" placeholder="Password" type="text">
+                                <input name="password_confirmation" class="form-control" placeholder="Password" type="password">
                             </div>
                         </div>
+                        <input type="checkbox" class="col-md-2" style="max-width:20px" onclick="showPasswordConfirmation()">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -172,6 +174,16 @@
                             </div>
                         </div>
                         <input type="checkbox" class="col-md-2" style="max-width:20px" onclick="showPasswordConfirmation()">
+                        <div class="col-xl-8">
+                            <div class="form-group">
+                                <label class="font-weight-bold"><span class="required">*</span>Role</label>
+                                <select class="form-control" name="role">
+                                    @foreach ($user_roles as$key => $role)
+                                        <option value="{{$role->id}}" >{{$role->name}}-{{$role->guard_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

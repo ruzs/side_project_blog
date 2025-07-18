@@ -9,6 +9,8 @@ use App\Entities\Category;
 use App\Repositories\CategoryRepository;
 use App\Entities\User;
 use App\Repositories\UserRepository;
+use App\Entities\Role;
+use App\Repositories\RoleRepository;
 
 class HomeController extends Controller
 {
@@ -16,6 +18,7 @@ class HomeController extends Controller
     private $post_repo;
     private $category_repo;
     private $user_repo;
+    private $role_repo;
     
 
     /**
@@ -25,12 +28,14 @@ class HomeController extends Controller
      */
     public function __construct(PostRepository $post_repo,
                                 CategoryRepository $category_repo,
-                                UserRepository $user_repo)
+                                UserRepository $user_repo,
+                                RoleRepository $role_repo)
     {
         // $this->middleware('auth');
         $this->post_repo        = $post_repo;
         $this->category_repo   = $category_repo;
         $this->user_repo   = $user_repo;
+        $this->role_repo   = $role_repo;
     }
 
     /**
@@ -53,10 +58,13 @@ class HomeController extends Controller
         if (auth()->user()->id ==1) {
             $rows=$this->post_repo->getAll();
             $categories=$this->category_repo->getAll();
+            $user_roles = $this->role_repo->getAll();
         }else{
             $rows=$this->post_repo->getByUserId(auth()->user()->id);
             $categories=$this->category_repo->getByUserId(auth()->user()->id);
+            $user_roles = $this->role_repo->getByNotProtect();
         }
+        // dd($this->user_repo->getById(auth()->user()->id)->userRoles);
         $this->data=[
             'bg'=>'assets/img/about-bg.jpg',
             'rows'=> $rows,
@@ -64,6 +72,8 @@ class HomeController extends Controller
             'posts'=>$this->post_repo->getAll(),
             'users'=>$this->user_repo->getAll(),
             'user'=>$this->user_repo->getById(auth()->user()->id),
+            'roles'=>$this->role_repo->getAll(),
+            'user_roles'=>$user_roles,
         ];
         return view('home',$this->data);
     }

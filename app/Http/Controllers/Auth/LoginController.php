@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Repositories\RoleRepository;
 
 class LoginController extends Controller
 {
     private $data;
+    private $role_repo;
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -35,9 +37,9 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(RoleRepository $role_repo)
     {
-        
+        $this->role_repo = $role_repo;
         $this->middleware('guest')->except('logout');
     }
 
@@ -53,6 +55,7 @@ class LoginController extends Controller
     {
         $this->data=[
             'bg'=>'assets/img/contact-bg.jpg',
+            'user_roles'=>$this->role_repo->getByNotProtect()
         ];
         return view('auth.register',$this->data);
     }

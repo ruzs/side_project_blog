@@ -52,6 +52,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('user', 'UserController')->only([
         'store', 'edit', 'update', 'show'
     ]);
+    Route::post('role/data', ['as' => 'role.data', 'uses' => 'RoleController@data']);
+    Route::resource('role', 'RoleController')->only([
+        'store', 'edit', 'update', 'show'
+    ]);
     
 });
 

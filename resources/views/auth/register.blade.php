@@ -62,6 +62,16 @@
                                 <input type="checkbox" class="col-md-2" style="max-width:20px" onclick="showPasswordConfirmation()">
                             </div>
                             <div class="form-group row">
+                                <label for="role"class="col-md-4 col-form-label text-md-right"><span class="required">*</span>Role</label>
+                                <div class="col-md-6">
+                                    <select id="role" class="form-control" name="role">
+                                        @foreach ($user_roles as$key => $role)
+                                        <option value="{{$role->id}}" >{{$role->name}}-{{$role->guard_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            {{-- <div class="form-group row">
                                 <label for="friend_code" class="col-md-4 col-form-label text-md-right">Friend code</label>
                                 <div class="col-md-6">
                                     <input id="friend_code" type="text" class="form-control @error('friend_code') is-invalid @enderror" name="friend_code" placeholder="Friend code" autocomplete="friend_code">
@@ -71,7 +81,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-success">
@@ -87,6 +97,7 @@
     </div>
     <script>
         // 顯示密碼
+        $("#role").val(3)
     function showPassword() {
         let type = $("input[name='password']").attr('type');
         

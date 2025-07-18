@@ -3,6 +3,7 @@
 @include('posts.post_form')
 @include('categories.category_form')
 @include('users.user_form')
+@include('roles.role_form')
 
 {{-- @section('modal')
 @yield('post-form-modal')
@@ -18,7 +19,7 @@
             <div class="card shadow-sm">
                 <div class="card-header">
                     <h1 class="text-center text-primary" >{{ Auth::user()->name }}</h1>
-                    <h1 class="text-center" > Welcom to BLOG </h1>
+                    <h1 class="text-center" > Welcom to Home </h1>
                 </div>
                 <div class="card-body">
                     {{ __('Dashboard') }}<br>
@@ -55,6 +56,14 @@
                     <div class="col-sm-3 col-12">
                         <button id='edit_user' class="btn btn-primary p-2 col-12 m-1" data-toggle="modal" data-target="#modal-all-user-form"><i class="fa-solid fa-pen-to-square"></i> Edit User</button>
                     </div>
+                    @if(auth()->user()->id == 1)
+                    <div class="col-sm-3 col-12">
+                        <button id='create_role' class="btn btn-success p-2 col-12 m-1" data-toggle="modal" data-target="#modal-new-role-form"><i class="fa-solid fa-file"></i> New Role</button>
+                    </div>
+                    <div class="col-sm-3 col-12">
+                        <button id='edit_role' class="btn btn-primary p-2 col-12 m-1" data-toggle="modal" data-target="#modal-all-role-form"><i class="fa-solid fa-pen-to-square"></i> Edit Role</button>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -135,6 +144,12 @@
         $('#modal-edit-user-form form').attr('action',$(this).data('url'));
         user_edit_data($(this).attr('data-id'))
     });
+    // Role Edit
+    $(document).on('click','table tbody tr td .role_edit_btn',function () {
+        // 表單網址
+        $('#modal-edit-role-form form').attr('action',$(this).data('url'));
+        role_edit_data($(this).attr('data-id'))
+    });
 
     function post_edit_data(id=null) {
         $.ajax({
@@ -184,11 +199,14 @@
             }
         })
     };
+
     function user_edit_data(id=null) {
         $('#modal-edit-user-form input[name=name]').val("");
         $('#modal-edit-user-form input[name=account]').val("");
         $('#modal-edit-user-form input[name=password]').val("");
         $('#modal-edit-user-form input[name=password_confirmation]').val("");
+        $('#modal-edit-user-form input[type=checkbox]').prop('checked', false);
+        $(`#modal-edit-user-form select[name=role]`).val('')
         $.ajax({
             url: `{{ route('user.data') }}`,
             type: "POST",
@@ -201,6 +219,39 @@
                 console.log('res',res);
                 $('#modal-edit-user-form input[name=name]').val(res.name);
                 $('#modal-edit-user-form input[name=account]').val(res.account);
+                console.log('a',res.user_roles.length);
+                if(res.user_roles.length){
+                    console.log("b");
+                    $(`#modal-edit-user-form select[name=role]`).val(res.user_roles[0].id)
+                }else{
+                    $(`#modal-edit-user-form select[name=role]`).val(3)
+                }
+            },
+            error: function (err) {
+                console.log('err',err);
+            }
+        })
+    };
+
+    function role_edit_data(id=null) {
+        $('#modal-edit-role-form input[name=name]').val("");
+        $('#modal-edit-role-form input[name=protect]').val("");
+        $('#modal-edit-role-form input[name=guard_name]').val("");
+        $('#modal-edit-role-form input[name=remark]').val("");
+        $.ajax({
+            url: `{{ route('role.data') }}`,
+            type: "POST",
+            dataType : 'json',
+            data:{
+                _token: "{{ csrf_token() }}",
+                id: id,
+            },
+            success: function (res) {
+                console.log('res',res);
+                $('#modal-edit-role-form input[name=name]').val(res.name);
+                $('#modal-edit-role-form input[name=protect]').val(res.protect);
+                $('#modal-edit-role-form input[name=guard_name]').val(res.guard_name);
+                $('#modal-edit-role-form input[name=remark]').val(res.remark);
             },
             error: function (err) {
                 console.log('err',err);

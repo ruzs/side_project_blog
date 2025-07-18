@@ -17,6 +17,8 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
     <!-- Styles -->
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
@@ -32,7 +34,8 @@
     <!-- Select2 -->
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/js/i18n/zh-TW.js') }}"></script>
-
+    <!-- Toastr -->
+    <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 </head>
 
 <body>
@@ -108,6 +111,39 @@
         </main>
     </div>
 
+    @if (session('success-message'))
+        <script>
+            toastr.success("{{ session('success-message') }}");
+            console.log("1","{{ session('success-message') }}");
+            
+        </script>
+    @elseif (session('success'))
+        <script>
+            toastr.success("{{ config('messages.SuccessSaving') }}");
+            console.log("2","{{ config('messages.SuccessSaving') }}");
+            
+        </script>
+    @endif
+
+    @if (session('error-message'))
+        <script>
+            toastr.error("{{ session('error-message') }}");
+            console.log("3","{{ session('error-message') }}");
+            
+        </script>
+    @elseif ($errors->any())
+        <script>
+            toastr.error("{{ config('messages.FieldInputError') }}");
+            console.log("4","{{ config('messages.FieldInputError') }}");
+            
+        </script>
+    @elseif (session('error'))
+        <script>
+            toastr.error("{{ config('messages.Error') }}");
+            console.log("5","{{ config('messages.Error') }}");
+            
+        </script>
+    @endif
     <script>
     </script>
 </body>
