@@ -123,8 +123,10 @@
                                 </thead>
                                 <tbody>
                                     @if (@$shareholders)
+                                    @php
+                                        $rank_number = 0
+                                    @endphp
                                     @foreach ($shareholders as $key => $shareholder)
-                                    {{-- @dd($shareholder,$shareholder->hasRoles) --}}
                                     @if (count($shareholder->hasRoles) != 0)
                                     <tr>
                                         <td scope="row" >{{$key+1}}</td>
@@ -154,17 +156,26 @@
                         <div class="col-12 row justify-content-center">
                             <h1 class="col-12 text-center">此次積分</h1>
                             <h2 class="col-12 text-center text-secondary">底:2點 台:1點</h2>
-                            <button id="addplayer"class="col-2">+</button>
+                            <button id="add_guest"class="col-2">+</button>
                             <form id="point" action="{{route('shareholder.store')}}" method="post" class="flex-wrap py-4">
                                 @csrf
+                                @foreach ($shareholders as $key=> $shareholder)
                                 <div class="input-group col-12 row player flex-wrap my-2">
                                     <div class="col-12">
-                                        <label for="player1" class="col-3">名 :</label>
-                                        <input type="text" name="player1" id="player1" class="col-8">
+                                        <label for="point{{$shareholder->id}}" class="col-3 text-right">{{$shareholder->name}} :</label>
+                                        <input type="number" name="point{{$shareholder->id}}" id="point{{$shareholder->id}}" class="col-8">
+                                    </div>
+                                    <hr>
+                                </div>
+                                @endforeach
+                                <div class="input-group col-12 row guest flex-wrap my-2">
+                                    <div class="col-12">
+                                        <label for="guest0" class="col-3 text-right">名 :</label>
+                                        <input type="text" name="guest0" id="guest0" class="col-8">
                                     </div>
                                     <div class="col-12 mb-2">
-                                        <label for="point1" class="col-3">分 :</label>
-                                        <input type="number" name="point1" id="point1" class="col-8">
+                                        <label for="guest_point0" class="col-3 text-right">分 :</label>
+                                        <input type="number" name="guest_point0" id="guest_point0" class="col-8">
                                     </div>
                                     <hr>
                                 </div>
@@ -192,20 +203,20 @@
     </div>
 
     <script>
-        let playerCount = 1
-        $("#addplayer").on("click",function () {
+        let guestCount = 0
+        $("#add_guest").on("click",function () {
             // $(".player").last().clone().insertAfter($(".player").last()).find("input").val('')
-            playerCount++;
-            let $last = $(".player").last();
+            guestCount++;
+            let $last = $(".guest").last();
             let $clone = $last.clone();
 
             // 更新 input 的 id 和清空值
-            $clone.find('input[type="text"]').attr('id', 'player' + playerCount).val('').attr('name', 'player' + playerCount).val('');
-            $clone.find('input[type="number"]').attr('id', 'point' + playerCount).val('').attr('name', 'point' + playerCount).val('');
+            $clone.find('input[type="text"]').attr('id', 'guest' + guestCount).val('').attr('name', 'guest' + guestCount).val('');
+            $clone.find('input[type="number"]').attr('id', 'point' + guestCount).val('').attr('name', 'point' + guestCount).val('');
 
             // 更新 label 的 for 屬性
-            $clone.find('label[for^="player"]').attr('for', 'player' + playerCount);
-            $clone.find('label[for^="point"]').attr('for', 'point' + playerCount);
+            $clone.find('label[for^="guest"]').attr('for', 'guest' + guestCount);
+            $clone.find('label[for^="point"]').attr('for', 'point' + guestCount);
 
             $clone.insertAfter($last);
         })

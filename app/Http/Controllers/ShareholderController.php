@@ -40,12 +40,12 @@ class ShareholderController extends Controller
 
     public function index()
     {
-        
+        // dd($this->user_repo->getByHasRole());
         $this->data=[
             'bg'=>'assets/img/post-bg.jpg',
             'row'=> "",
             'points'=> "",
-            'shareholders'=>$this->user_repo->getByUserRole()
+            'shareholders'=>$this->user_repo->getByHasRole()
         ];
         return view('shareholder', $this->data);
     }
