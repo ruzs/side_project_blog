@@ -21,14 +21,17 @@ class UserRepository extends EloquentRepository
     {
         return $this->model->orderBy('id','asc')->get();
     }
+
     public function getByUserId($created_by)
     {
         return $this->model->where('created_by', $created_by)->get();
     }
+
     public function getById($id)
     {
         return $this->model->with('userRoles')->where('id', $id)->first();
     }
+
     public function getByHasRole()
     {
         return $this->model
@@ -37,4 +40,5 @@ class UserRepository extends EloquentRepository
         ->select('users.*','roles.name as role_name')
         ->get();
     }
+    
 }

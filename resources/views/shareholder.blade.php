@@ -112,7 +112,7 @@
                     <div class="row gx-4 gx-lg-5 justify-content-center">
                         <div class="col-12 table-responsive">
                             <h1 class="col-12 text-center">佺益電動麻將桌股東大會</h1>
-                            <h1 class="col-12 text-center">目前總積分</h1>
+                            <h1 class="col-12 text-center">本月積分</h1>
                             <table id='user_edit_table' class="table text-center">
                                 <thead class="thead-dark">
                                     <tr>
@@ -126,23 +126,84 @@
                                     @php
                                         $rank_number = 0
                                     @endphp
-                                    @foreach ($shareholders as $key => $shareholder)
+                                    @foreach ($shareholders->sortByDesc('month_point') as $key => $shareholder)
                                     @if (count($shareholder->hasRoles) != 0)
                                     <tr>
                                         <td scope="row" >{{$key+1}}</td>
                                         <td class="font-weight-bold">{{$shareholder->name}}</td>
-                                        <td class="font-weight-bold">0</td>
+                                        <td class="font-weight-bold">{{$shareholder->month_point}}</td>
                                     </tr>
                                     @endif
                                     @endforeach
                                     
                                     @else
-                                    {{-- <tr>
-                                        <td scope="row" >1</td>
-                                        <td class="font-weight-bold">Eddie</td>
-                                        <td class="font-weight-bold">30</td>
-                                    </tr> --}}
+                                    <tr>
+                                        <td colspan='4'>
+                                            <a href="javascript:void(0)" class="nav-link disabled">Your point not found</a>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+
+                            <h1 class="col-12 text-center">目前總積分</h1>
+                            <table id='user_edit_table' class="table text-center">
+                                <thead class="bg-primary text-white">
+                                    <tr>
+                                        <th scope="col" style="width:10%">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Point</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (@$shareholders)
+                                    @php
+                                        $rank_number = 0
+                                    @endphp
+                                    @foreach ($shareholders->sortByDesc('total_point')  as $key => $shareholder)
+                                    @if (count($shareholder->hasRoles) != 0)
+                                    <tr>
+                                        <td scope="row" >{{$key+1}}</td>
+                                        <td class="font-weight-bold">{{$shareholder->name}}</td>
+                                        <td class="font-weight-bold">{{$shareholder->total_point}}</td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
                                     
+                                    @else
+                                    <tr>
+                                        <td colspan='4'>
+                                            <a href="javascript:void(0)" class="nav-link disabled">Your point not found</a>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                            <h1 class="col-12 text-center">上月積分</h1>
+                            <table id='user_edit_table' class="table text-center">
+                                <thead class="bg-success text-white">
+                                    <tr>
+                                        <th scope="col" style="width:10%">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Point</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (@$shareholders)
+                                    @php
+                                        $rank_number = 0
+                                    @endphp
+                                    @foreach ($shareholders->sortByDesc('last_month_point')  as $key => $shareholder)
+                                    @if (count($shareholder->hasRoles) != 0)
+                                    <tr>
+                                        <td scope="row" >{{$key+1}}</td>
+                                        <td class="font-weight-bold">{{$shareholder->name}}</td>
+                                        <td class="font-weight-bold">{{$shareholder->last_month_point}}</td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
+                                    
+                                    @else
                                     <tr>
                                         <td colspan='4'>
                                             <a href="javascript:void(0)" class="nav-link disabled">Your point not found</a>
@@ -157,7 +218,7 @@
                         <div class="col-12 row justify-content-center">
                             <h1 class="col-12 text-center">此次積分</h1>
                             <h2 class="col-12 text-center text-secondary">底:2點 台:1點</h2>
-                            <button id="add_guest"class="btn btn-lg btn-primary col-6 col-sm-3 fs-1">+</button>
+                            {{-- <button id="add_guest"class="btn btn-lg btn-primary col-6 col-sm-3 fs-1">+</button> --}}
                             <form id="point" action="{{route('shareholder.store')}}" method="post" class="flex-wrap py-4">
                                 @csrf
                                 @foreach ($shareholders as $key=> $shareholder)
@@ -169,7 +230,7 @@
                                     <hr class="mt-2">
                                 </div>
                                 @endforeach
-                                <div class="row col-12 guest">
+                                {{-- <div class="row col-12 guest">
                                     <div class="input-group col-12 row flex-wrap my-2">
                                         <div class="col-12 row">
                                             <label for="guest0" class="col-6 text-right">名 :</label>
@@ -183,7 +244,7 @@
                                         </div>
                                     </div>
                                     <hr class="mt-2">
-                                </div>
+                                </div> --}}
                                 <button class="btn btn-primary mt-2">Submit</button>
                             </form>
                         </div>

@@ -46,6 +46,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
+    public function hasPoints()
+    {
+        return $this->hasMany("App\Entities\Point");
+    }
+
     public function hasRoles()
     {
         return $this->belongsToMany("App\Entities\User", "user_has_roles", "user_id", "role_id");
