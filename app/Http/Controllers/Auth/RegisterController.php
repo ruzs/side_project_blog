@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Entities\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -51,7 +52,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users'],
             'account' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -69,12 +70,31 @@ class RegisterController extends Controller
         //     dd(99);
         // }
         // dd($data);
-        return User::create([
+        
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['account']."@".$data['password'],
             'account' => $data['account'],
             'password' => Hash::make($data['password']),
-            'role' => $data['friend_code'] == "trykankan"?2:0,
         ]);
+        if (@$data['role']) {
+            $userRole=[
+                "role_id"   => $data['role'],
+                'model_type'=> 'App\\Entities\\User',
+                'user_id'   => $user->id,
+            ];
+
+            $exists = DB::table('user_has_roles')
+            ->where('user_id', $userRole['user_id'])
+            ->exists();
+            if ($exists) {
+                DB::table('user_has_roles')
+                ->where('user_id', $userRole['user_id'])
+                ->update($userRole);
+            }else{
+                DB::table('user_has_roles')->insert($userRole);
+            }
+        }
+        return $user;
     }
 }

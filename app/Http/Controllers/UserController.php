@@ -165,24 +165,25 @@ class UserController extends Controller
                     unset($data['role']);
                     $user->update($data);
                     // $user->syncRoles(@$role);
-
-                    $userRole=[
-                        "role_id"   => $role,
-                        'model_type'=> 'App\\Entities\\User',
-                        'user_id'   => $user->id,
-                    ];
-
-                    $exists = DB::table('user_has_roles')
-                    // ->where('role_id', $userRole['role_id'])
-                    // ->where('model_type',  $userRole['model_type'])
-                    ->where('user_id', $userRole['user_id'])
-                    ->exists();
-                    if ($exists) {
-                        DB::table('user_has_roles')
+                    if ($role) {
+                        $userRole=[
+                            "role_id"   => $role,
+                            'model_type'=> 'App\\Entities\\User',
+                            'user_id'   => $user->id,
+                        ];
+    
+                        $exists = DB::table('user_has_roles')
+                        // ->where('role_id', $userRole['role_id'])
+                        // ->where('model_type',  $userRole['model_type'])
                         ->where('user_id', $userRole['user_id'])
-                        ->update($userRole);
-                    }else{
-                        DB::table('user_has_roles')->insert($userRole);
+                        ->exists();
+                        if ($exists) {
+                            DB::table('user_has_roles')
+                            ->where('user_id', $userRole['user_id'])
+                            ->update($userRole);
+                        }else{
+                            DB::table('user_has_roles')->insert($userRole);
+                        }
                     }
                 }
             }

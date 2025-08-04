@@ -30,8 +30,8 @@
                                 <label class="font-weight-bold"><span class="required">*</span>Category</label>
                                 <select name="category_id" id="select_category" class="form-select rounded select2bt4" >
                                     <option value="0">無分類</option>
-                                    @foreach ($posts as  $key => $post)
-                                        <option value="{{$post->id}}">{{$post->title}}</option>
+                                    @foreach ($categories as  $key => $categorie)
+                                        <option value="{{$categorie->id}}">{{$categorie->title}}</option>
                                     @endforeach
                                 </select>
                             </div>

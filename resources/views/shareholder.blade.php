@@ -153,6 +153,7 @@
                             </table>
                         </div>
                         @if(auth()->user())
+                        <hr>
                         <div class="col-12 row justify-content-center">
                             <h1 class="col-12 text-center">此次積分</h1>
                             <h2 class="col-12 text-center text-secondary">底:2點 台:1點</h2>
