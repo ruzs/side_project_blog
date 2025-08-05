@@ -80,6 +80,26 @@ class ShareholderController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        DB::beginTransaction();
+        try {
+        $sum = 0;
+        $keys=[];
+        foreach ($data as $key => $value) {
+            if (preg_match('/^(point)(\d+)$/', $key,$id) && $value) {
+                $sum+= $value;
+            }else{
+                if (preg_match('/^(point)(\d+)$/', $key)){
+                    array_push($keys,$key);
+                }
+            }
+        }
+        foreach ($keys as $key => $value) {
+            unset($data[$value]);
+        }
+        // dd($keys,$data);
+        if ($sum !=0 && count($data) > 3) {
+            throw new \Exception('分數不完整，相差'.$sum.'分', config('errors.custom_error.code'));
+        }
         foreach ($data as $key => $value) {
             if (preg_match('/^(point)(\d+)$/', $key,$id) && $value) {
                 $save_data = [
@@ -89,15 +109,16 @@ class ShareholderController extends Controller
                 $this->point_repo->save($save_data);
             }
         }
-        DB::beginTransaction();
-        try {
             
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
-            // $this->errorlog_repo->saveError($e);
-            return redirect()->back()->with('error', true);
+            // return response()->json([
+            //     "success" => false,
+            //     "message" => @$e->getMessage(),
+            // ]);
+
+            return redirect()->back()->with('error', @$e->getMessage()?:"false");
         }
 
         // if ($request->continue)

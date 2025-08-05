@@ -19,6 +19,6 @@ class Point extends Model
     protected $table = 'points';
 
     protected $fillable = [
-        'user_id', 'point', 'log_date'
+        'user_id', 'point', 'count'
     ];
 }

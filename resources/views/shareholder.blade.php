@@ -17,6 +17,7 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
     <!-- Styles -->
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
@@ -32,6 +33,7 @@
     <!-- Select2 -->
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/js/i18n/zh-TW.js') }}"></script>
+    <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
     <style>
         header.masthead{
             height: 100px;!important
@@ -95,11 +97,9 @@
             {{-- <div class="row justify-content-center"> --}}
                 <div class="col-md-10 col-lg-8 col-xl-7 m-auto">
                     <div class="site-heading">
-                        <a href="{{route('home.index')}}" class="subheading text-white">
-                            <h1>
-                                Shareholder
-                            </h1>
-                        </a>
+                        <h1>
+                            Shareholder
+                        </h1>
                     </div>
                 </div>
             {{-- </div> --}}
@@ -111,7 +111,7 @@
                 <div class="container px-4 px-lg-5">
                     <div class="row gx-4 gx-lg-5 justify-content-center">
                         <div class="col-12 table-responsive">
-                            <h1 class="col-12 text-center">佺益電動麻將桌股東大會</h1>
+                            <h1 class="col-12 text-center fz-5">中雀電動麻將桌股東大會</h1>
                             <h1 class="col-12 text-center">本月積分</h1>
                             <table id='user_edit_table' class="table text-center">
                                 <thead class="thead-dark">
@@ -119,6 +119,7 @@
                                         <th scope="col" style="width:10%">#</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Point</th>
+                                        <th scope="col">Money</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -129,9 +130,10 @@
                                     @foreach ($shareholders->sortByDesc('month_point') as $key => $shareholder)
                                     @if (count($shareholder->hasRoles) != 0)
                                     <tr>
-                                        <td scope="row" >{{$key+1}}</td>
-                                        <td class="font-weight-bold">{{$shareholder->name}}</td>
-                                        <td class="font-weight-bold">{{$shareholder->month_point}}</td>
+                                        <td scope="row" class="font-weight-bold">{{$rank_number+=1}}</td>
+                                        <td class="">{{$shareholder->name}}</td>
+                                        <td class="">{{$shareholder->month_point}}</td>
+                                        <td class="">{{$shareholder->month_point*5}}</td>
                                     </tr>
                                     @endif
                                     @endforeach
@@ -146,16 +148,17 @@
                                 </tbody>
                             </table>
 
-                            <h1 class="col-12 text-center">目前總積分</h1>
+                            <h1 class="col-12 text-center text-primary">目前總積分</h1>
                             <table id='user_edit_table' class="table text-center">
                                 <thead class="bg-primary text-white">
                                     <tr>
                                         <th scope="col" style="width:10%">#</th>
-                                        <th scope="col">Name</th>
+                                        <th scope="col fw-bold">Name</th>
                                         <th scope="col">Point</th>
+                                        <th scope="col">Money</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="text-primary">
                                     @if (@$shareholders)
                                     @php
                                         $rank_number = 0
@@ -163,9 +166,10 @@
                                     @foreach ($shareholders->sortByDesc('total_point')  as $key => $shareholder)
                                     @if (count($shareholder->hasRoles) != 0)
                                     <tr>
-                                        <td scope="row" >{{$key+1}}</td>
-                                        <td class="font-weight-bold">{{$shareholder->name}}</td>
-                                        <td class="font-weight-bold">{{$shareholder->total_point}}</td>
+                                        <td scope="row" class="font-weight-bold">{{$rank_number+=1}}</td>
+                                        <td class="">{{$shareholder->name}}</td>
+                                        <td class="">{{$shareholder->total_point}}</td>
+                                        <td class="">{{$shareholder->total_point*5}}</td>
                                     </tr>
                                     @endif
                                     @endforeach
@@ -179,16 +183,17 @@
                                     @endif
                                 </tbody>
                             </table>
-                            <h1 class="col-12 text-center">上月積分</h1>
+                            <h1 class="col-12 text-center text-success">上月積分</h1>
                             <table id='user_edit_table' class="table text-center">
                                 <thead class="bg-success text-white">
                                     <tr>
                                         <th scope="col" style="width:10%">#</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Point</th>
+                                        <th scope="col">Money</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="text-success">
                                     @if (@$shareholders)
                                     @php
                                         $rank_number = 0
@@ -196,9 +201,10 @@
                                     @foreach ($shareholders->sortByDesc('last_month_point')  as $key => $shareholder)
                                     @if (count($shareholder->hasRoles) != 0)
                                     <tr>
-                                        <td scope="row" >{{$key+1}}</td>
-                                        <td class="font-weight-bold">{{$shareholder->name}}</td>
-                                        <td class="font-weight-bold">{{$shareholder->last_month_point}}</td>
+                                        <td scope="row" class="font-weight-bold">{{$rank_number+=1}}</td>
+                                        <td class="">{{$shareholder->name}}</td>
+                                        <td class="">{{$shareholder->last_month_point}}</td>
+                                        <td class="">{{$shareholder->last_month_point*5}}</td>
                                     </tr>
                                     @endif
                                     @endforeach
@@ -216,10 +222,10 @@
                         @if(auth()->user())
                         <hr>
                         <div class="col-12 row justify-content-center">
-                            <h1 class="col-12 text-center">此次積分</h1>
+                            <h1 class="col-12 text-center text-danger">此次積分</h1>
                             <h2 class="col-12 text-center text-secondary">底:2點 台:1點</h2>
                             {{-- <button id="add_guest"class="btn btn-lg btn-primary col-6 col-sm-3 fs-1">+</button> --}}
-                            <form id="point" action="{{route('shareholder.store')}}" method="post" class="flex-wrap py-4">
+                            <form id="point" action="{{route('shareholder.store')}}" method="post" class="flex-wrap py-4 text-danger">
                                 @csrf
                                 @foreach ($shareholders as $key=> $shareholder)
                                 <div class="input-group col-12 row player flex-wrap my-2">
@@ -245,13 +251,19 @@
                                     </div>
                                     <hr class="mt-2">
                                 </div> --}}
-                                <button class="btn btn-primary mt-2">Submit</button>
+                                <div class="row justify-content-between">
+                                    <input type="text" name="count" class="h-50 my-auto col-4">
+                                    <button class="btn btn-primary col-6">Submit ( 提交 )</button>
+                                </div>
                             </form>
                         </div>
                         @else
                         <h2 class="col-12 text-center">登記積分，請先右上角登入</h2>
                         @endif
                         <a href="http://atawmj.org.tw/mjking.htm" target="black" class="btn btn-lg btn-success">台數算法</a>
+                        @if (session('error'))
+                            <h1 class="text-danger">登記失敗，原因：{{ session('error') }}</h1>
+                        @endif
                     </div>
                 </div>
                 <!-- Footer-->
@@ -268,6 +280,32 @@
         </main>
     </div>
 
+    {{-- @if (session('success-message'))
+        <script>
+            toastr.success("{{ session('success-message') }}");
+        </script>
+    @elseif (session('success'))
+        <script>
+            toastr.success("{{ config('messages.SuccessSaving') }}");
+        </script>
+    @endif
+
+    @if (session('error-message'))
+        <script>
+            toastr.error("{{ session('error-message') }}");
+            console.log(20);
+        </script>
+    @elseif ($errors->any())
+        <script>
+            toastr.error("{{ config('messages.FieldInputError') }}");
+            console.log(30);
+        </script>
+    @elseif (session('error'))
+        <script>
+            toastr.error("{{ config('messages.Error') }}");
+            console.log(40);
+        </script>
+    @endif --}}
     <script>
         let guestCount = 0
         $("#add_guest").on("click",function () {
