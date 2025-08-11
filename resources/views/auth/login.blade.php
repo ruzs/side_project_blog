@@ -11,7 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">登入</div>
                 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -63,9 +63,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary p-2 col-auto">
-                                    {{ __('Login') }}
-                                </button>
+                                <button type="submit" class="btn btn-primary p-2 col-auto">登入</button>
 
                                 {{-- @if (Route::has('password.request'))
                                     <a id=fpf class="btn btn-link" href="{{ route('password.request') }}">
@@ -73,7 +71,7 @@
                                     </a>
                                 @endif --}}
                                 @if (Route::has('register'))
-                                    <a class="btn btn-success btn-sm float-right mt-2" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="btn btn-success btn-sm float-right mt-2" href="{{ route('register') }}">註冊</a>
                                 @endif
                             </div>
                         </div>

@@ -162,14 +162,14 @@
                         </div>
                         <div class="col-xl-8">
                             <div class="form-group">
-                                <label class="font-weight-bold"><span class="required">*</span>New Password</label>
+                                <label class="font-weight-bold">New Password</label>
                                 <input type="password" name="password" class="form-control" placeholder="New Password" value="">
                             </div>
                         </div>
                         <input type="checkbox" class="col-md-2" style="max-width:20px" onclick="showPassword()">
                         <div class="col-xl-8">
                             <div class="form-group">
-                                <label class="font-weight-bold"><span class="required">*</span>Password Confirmation</label>
+                                <label class="font-weight-bold">Password Confirmation</label>
                                 <input type="password" name="password_confirmation"  class="form-control" placeholder="Password"  value="">
                             </div>
                         </div>

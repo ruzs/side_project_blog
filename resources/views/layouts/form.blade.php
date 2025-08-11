@@ -45,12 +45,12 @@
                         @guest
                             @if (!request()->route()->getName() =='login')
                             <li class="nav-item">
-                                <a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link  px-lg-3 py-3 py-lg-4" href="{{ route('login') }}">登入</a>
                             </li>
                             @endif
                             {{-- @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">註冊</a>
                                 </li>
                             @endif --}}
                         @else
