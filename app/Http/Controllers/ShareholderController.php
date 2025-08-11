@@ -77,42 +77,55 @@ class ShareholderController extends Controller
         ];
         return view('shareholder', $this->data);
     }
+
     public function store(Request $request)
     {
         $data = $request->all();
         DB::beginTransaction();
         try {
-        $sum = 0;
-        $keys=[];
-        foreach ($data as $key => $value) {
-            if (preg_match('/^(point)(\d+)$/', $key,$id) && $value) {
-                $sum+= $value;
-            }else{
-                if (preg_match('/^(point)(\d+)$/', $key)){
-                    array_push($keys,$key);
+            $sum = 0;
+            $keys=[];
+            foreach ($data as $key => $value) {
+                if (preg_match('/^(point)(\d+)$/', $key,$id) && $value) {
+                    $sum+= $value;
+                }else{
+                    if (preg_match('/^(point)(\d+)$/', $key)){
+                        array_push($keys,$key);
+                    }
                 }
             }
-        }
-        foreach ($keys as $key => $value) {
-            unset($data[$value]);
-        }
-        // dd($keys,$data);
-        if ($sum !=0 && count($data) > 3) {
-            throw new \Exception('分數不完整，相差'.$sum.'分', config('errors.custom_error.code'));
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/^(point)(\d+)$/', $key,$id) && $value) {
-                $save_data = [
-                    "user_id"   => $id[2],
-                    "point"     => $value,
-                ];
-                $this->point_repo->save($save_data);
+            foreach ($keys as $key => $value) {
+                unset($data[$value]);
             }
-        }
+            if ($sum !=0 && count($data) > 3) {
+                throw new \Exception('分數不完整，相差'.$sum.'分', config('errors.custom_error.code'));
+            }
             
+            $data_count = $this->point_repo->getNowMonthPoint()->sortByDesc('created_at')->first()->count;
+            if (@$this->point_repo->getNowMonthPoint()->sortByDesc('created_at')->first()->count) {
+                $data_count_add1 = substr($data_count,6)+1;
+                if ($data_count_add1<10) {
+                    $count = date('Ym').'0'.($data_count_add1);
+                }else{
+                    $count = date('Ym').($data_count_add1);
+                }
+            }else{
+                $count = date('Ym').'01';
+            }
+            foreach ($data as $key => $value) {
+                if (preg_match('/^(point)(\d+)$/', $key,$id) && $value) {
+                    $save_data = [
+                        "user_id"   => $id[2],
+                        "point"     => $value,
+                        "count"     => $count,
+                    ];
+                    $this->point_repo->save($save_data);
+                }
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            dd($e);
             // return response()->json([
             //     "success" => false,
             //     "message" => @$e->getMessage(),
@@ -120,9 +133,12 @@ class ShareholderController extends Controller
 
             return redirect()->back()->with('error', @$e->getMessage()?:"false");
         }
-
         // if ($request->continue)
         //     return redirect()->back()->with('success', true);
         return redirect()->route('shareholder.index')->with('success', true);
+    }
+    public function update(Point $point)
+    {
+
     }
 }

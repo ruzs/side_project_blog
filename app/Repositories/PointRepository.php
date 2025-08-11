@@ -16,7 +16,7 @@ class PointRepository extends EloquentRepository
     {
         $this->model = $model;
     }
-    public function getPoint() {
-        return $this->model->whereYear('created_at', 2025)->whereMonth('created_at', 8)->get();
+    public function getNowMonthPoint() {
+        return $this->model->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->get();
     }
 }
