@@ -112,7 +112,7 @@
                     <div class="row gx-4 gx-lg-5 justify-content-center">
                         <div class="col-12 table-responsive">
                             <h1 class="col-12 text-center fz-5">中雀電動麻將桌股東大會</h1>
-                            <h1 class="col-12 text-center">本月積分</h1>
+                            <h1 class="col-12 text-center">本月積分( {{ date('m') }} 月)</h1>
                             <table id='user_edit_table' class="table text-center">
                                 <thead class="thead-dark">
                                     <tr>
@@ -148,7 +148,7 @@
                                 </tbody>
                             </table>
 
-                            <h1 class="col-12 text-center text-primary">目前總積分</h1>
+                            <h1 class="col-12 text-center text-primary">總積分</h1>
                             <table id='user_edit_table' class="table text-center">
                                 <thead class="bg-primary text-white">
                                     <tr>
@@ -183,7 +183,7 @@
                                     @endif
                                 </tbody>
                             </table>
-                            <h1 class="col-12 text-center text-success">上月積分</h1>
+                            <h1 class="col-12 text-center text-success">上月積分( {{ date('m', strtotime('-1 month')) }} 月)</h1>
                             <table id='user_edit_table' class="table text-center">
                                 <thead class="bg-success text-white">
                                     <tr>

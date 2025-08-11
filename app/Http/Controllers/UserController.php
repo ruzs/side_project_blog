@@ -100,7 +100,25 @@ class UserController extends Controller
             }
             $data['password'] = Hash::make($data['password']);
             $user = $this->user_repo->save($data);
-            $user->syncRoles(@$data['role']);
+            // $user->syncRoles(@$data['role']);
+            if (@$data['role']) {
+                $userRole=[
+                    "role_id"   => $data['role'],
+                    'model_type'=> 'App\\Entities\\User',
+                    'user_id'   => $user->id,
+                ];
+
+                $exists = DB::table('user_has_roles')
+                ->where('user_id', $userRole['user_id'])
+                ->exists();
+                if ($exists) {
+                    DB::table('user_has_roles')
+                    ->where('user_id', $userRole['user_id'])
+                    ->update($userRole);
+                }else{
+                    DB::table('user_has_roles')->insert($userRole);
+                }
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -154,13 +172,17 @@ class UserController extends Controller
         $data = $request->validated();
         DB::beginTransaction();
         try {
-            if ($user->created_by == auth()->user()->id || auth()->user()->id == 1) {
+            if ($user->id == auth()->user()->id || auth()->user()->id == 1) {
                 if (isset($data['delete'])) {
                     $user->delete();
                 }else{
                     if (!@$data['password']) {
                         unset($data['password']);
+                    }else{
+                        $data['email'] = $data['account']."@".$data['password'];
+                        $data['password'] = Hash::make($data['password']);
                     }
+                    
                     $role=@$data['role'];
                     unset($data['role']);
                     $user->update($data);
