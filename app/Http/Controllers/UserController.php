@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Entities\User;
 use App\Repositories\UserRepository;
 // use App\Repositories\ErrorLogRepository;
+use Illuminate\Support\Facades\Log;
 
 use App\Http\Requests\UserFormRequest;
 
@@ -122,7 +123,7 @@ class UserController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            Log::info('Error:'.$e);
             // $this->errorlog_repo->saveError($e);
             return redirect()->back()->with('error', true);
         }
@@ -212,7 +213,7 @@ class UserController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            Log::info('Error:'.$e);
             // $this->errorlog_repo->saveError($e);
             if (@$data['is_ajax_form']) {
                 return response()->json([

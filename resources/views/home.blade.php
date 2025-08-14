@@ -4,6 +4,7 @@
 @include('categories.category_form')
 @include('users.user_form')
 @include('roles.role_form')
+@include('points.point_form')
 
 {{-- @section('modal')
 @yield('post-form-modal')
@@ -64,6 +65,27 @@
                         <button id='edit_role' class="btn btn-primary p-2 col-12 m-1" data-toggle="modal" data-target="#modal-all-role-form"><i class="fa-solid fa-pen-to-square"></i> Edit Role</button>
                     </div>
                     @endif
+                    <div class="col-sm-3 col-12">
+                        {{-- <button id='edit_point' class="btn btn-primary p-2 col-12 m-1" data-toggle="modal" data-target="#modal-all-point-form"><i class="fa-solid fa-pen-to-square"></i> Edit Point</button> --}}
+                    </div>
+                    <div class="col-sm-3 col-12">
+                        <button id='edit_shareholder' class="btn btn-primary p-2 col-12 m-1" data-toggle="modal" data-target="#modal-all-shareholder-form"><i class="fa-solid fa-pen-to-square"></i> Edit Point</button>
+                    </div>
+                    <div class="col-12">
+                        @if (session('success-message'))
+                        <h1 class="text-Success text-center">{{ session('success-message') }}</h1>
+                        @elseif (session('success'))
+                        <h1 class="text-Success text-center">{{ session('success') }}</h1>
+                        @endif
+                        @if (session('error-message'))
+                        <h1 class="text-danger text-center">{{ session('error-message') }}</h1>
+                        @elseif ($errors->any())
+                        <h1 class="text-danger text-center">{{ config('messages.FieldInputError') }}</h1>
+                        @elseif (session('error'))
+                        <h1 class="text-danger text-center">{{ session('error') }}</h1>
+                        @endif
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -149,6 +171,14 @@
         // 表單網址
         $('#modal-edit-role-form form').attr('action',$(this).data('url'));
         role_edit_data($(this).attr('data-id'))
+    });
+    // Point Edit
+    $(document).on('click','table tbody tr td .shareholder_edit_btn',function () {
+        // 表單網址
+        $('#modal-edit-shareholder-form form').attr('action',$(this).data('url'));
+        $('#modal-edit-shareholder-form input.point').val('')
+        $('#modal-edit-shareholder-form input[name=count]').val($(this).data('id'))
+        point_edit_data($(this).attr('data-id'))
     });
 
     function post_edit_data(id=null) {
@@ -252,6 +282,35 @@
                 $('#modal-edit-role-form input[name=protect]').val(res.protect);
                 $('#modal-edit-role-form input[name=guard_name]').val(res.guard_name);
                 $('#modal-edit-role-form input[name=remark]').val(res.remark);
+            },
+            error: function (err) {
+                console.log('err',err);
+            }
+        })
+    };
+
+    function point_edit_data(count=null) {
+        $('#modal-edit-shareholder-form input[name=name]').val("");
+        $('#modal-edit-shareholder-form input[name=protect]').val("");
+        $('#modal-edit-shareholder-form input[name=guard_name]').val("");
+        $('#modal-edit-shareholder-form input[name=remark]').val("");
+        $.ajax({
+            url: `{{ route('shareholder.data') }}`,
+            type: "POST",
+            dataType : 'json',
+            data:{
+                _token: "{{ csrf_token() }}",
+                count: count,
+            },
+            success: function (res) {
+                console.log('res',res);
+                $.each(res,function (index,value) {
+                    console.log("value",value);
+                    $(`#modal-edit-shareholder-form input[data-id=${value.user_id}]`).val(value.point);
+                });
+                // $('#modal-edit-shareholder-form input[data-id=protect]').val(res.protect);
+                // $('#modal-edit-shareholder-form input[data-id=guard_name]').val(res.guard_name);
+                // $('#modal-edit-shareholder-form input[data-id=remark]').val(res.remark);
             },
             error: function (err) {
                 console.log('err',err);

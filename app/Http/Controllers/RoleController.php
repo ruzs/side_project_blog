@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Entities\Role;
 use App\Repositories\RoleRepository;
 // use App\Repositories\ErrorLogRepository;
+use Illuminate\Support\Facades\Log;
 
 use App\Http\Requests\RoleFormRequest;
 
@@ -99,7 +100,7 @@ class RoleController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            Log::info('Error:'.$e);
             // $this->errorlog_repo->saveError($e);
             return redirect()->back()->with('error', true);
         }
@@ -160,7 +161,7 @@ class RoleController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            Log::info('Error:'.$e);
             // $this->errorlog_repo->saveError($e);
             return redirect()->back()->with('error', true);
         }

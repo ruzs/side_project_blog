@@ -31,8 +31,11 @@ Route::get('/shareholder', 'ShareholderController@index')->name('shareholder.ind
 
 // 需經過驗證
 Route::group(['middleware' => 'auth'], function () {
+
+    Route::post('shareholder/data', ['as' => 'shareholder.data', 'uses' => 'ShareholderController@data']);
+    Route::patch('shareholder/update', ['as' => 'shareholder.update', 'uses' => 'ShareholderController@update']);
     Route::resource('shareholder', 'ShareholderController')->only([
-        'store', 'edit', 'update', 'show'
+        'store'
     ]);
     Route::resource('home', 'HomeController')->only([
         'index', 'show',

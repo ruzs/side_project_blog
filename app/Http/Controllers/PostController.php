@@ -10,6 +10,7 @@ use App\Entities\Post;
 use App\Repositories\PostRepository;
 use App\Repositories\CategoryRepository;
 // use App\Repositories\ErrorLogRepository;
+use Illuminate\Support\Facades\Log;
 
 use App\Http\Requests\PostFormRequest;
 
@@ -102,7 +103,7 @@ class PostController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            Log::info('Error:'.$e);
             // $this->errorlog_repo->saveError($e);
             return redirect()->back()->with('error', true);
         }
@@ -163,7 +164,7 @@ class PostController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            Log::info('Error:'.$e);
             // $this->errorlog_repo->saveError($e);
             return redirect()->back()->with('error', true);
         }

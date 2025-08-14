@@ -16,7 +16,25 @@ class PointRepository extends EloquentRepository
     {
         $this->model = $model;
     }
+
     public function getNowMonthPoint() {
         return $this->model->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->get();
+    }
+
+    public function getByCount($count) {
+        return $this->model->where('count', $count)->get();
+    }
+    public function getByCountUserId($count,$id) {
+        return $this->model->where('count', $count)->where("user_id",$id)->first();
+    }
+
+    public function getByGroupCount() {
+        return $this->model
+        ->select('count', 
+                DB::raw('SUM(point) as total_point'), 
+                DB::raw('FROM_UNIXTIME(AVG(UNIX_TIMESTAMP(created_at))) as created_at'))
+        ->groupBy(DB::raw('`count`'))
+        ->orderBy('count','desc')
+        ->get();
     }
 }

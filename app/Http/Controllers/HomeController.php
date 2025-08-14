@@ -11,6 +11,8 @@ use App\Entities\User;
 use App\Repositories\UserRepository;
 use App\Entities\Role;
 use App\Repositories\RoleRepository;
+use App\Entities\Point;
+use App\Repositories\PointRepository;
 
 class HomeController extends Controller
 {
@@ -19,6 +21,7 @@ class HomeController extends Controller
     private $category_repo;
     private $user_repo;
     private $role_repo;
+    private $point_repo;
     
 
     /**
@@ -29,6 +32,7 @@ class HomeController extends Controller
     public function __construct(PostRepository $post_repo,
                                 CategoryRepository $category_repo,
                                 UserRepository $user_repo,
+                                PointRepository $point_repo,
                                 RoleRepository $role_repo)
     {
         // $this->middleware('auth');
@@ -36,6 +40,7 @@ class HomeController extends Controller
         $this->category_repo   = $category_repo;
         $this->user_repo   = $user_repo;
         $this->role_repo   = $role_repo;
+        $this->point_repo   = $point_repo;
     }
 
     /**
@@ -64,16 +69,20 @@ class HomeController extends Controller
             $categories=$this->category_repo->getByUserId(auth()->user()->id);
             $user_roles = $this->role_repo->getByNotProtect();
         }
-        // dd($this->user_repo->getById(auth()->user()->id)->userRoles);
-        $this->data=[
-            'bg'=>'assets/img/about-bg.jpg',
-            'rows'=> $rows,
-            'categories'=>$categories,
-            'posts'=>$this->post_repo->getAll(),
-            'users'=>$this->user_repo->getAll(),
-            'user'=>$this->user_repo->getById(auth()->user()->id),
-            'roles'=>$this->role_repo->getAll(),
-            'user_roles'=>$user_roles,
+        
+        $shareholders = $this->user_repo->getByHasRole();
+
+        $this->data = [
+            'bg'            => 'assets/img/about-bg.jpg',
+            'rows'          => $rows,
+            'categories'    => $categories,
+            'posts'         => $this->post_repo->getAll(),
+            'users'         => $this->user_repo->getAll(),
+            'user'          => $this->user_repo->getById(auth()->user()->id),
+            'roles'         => $this->role_repo->getAll(),
+            'user_roles'    => $user_roles,
+            'points'        => $this->point_repo->getByGroupCount(),
+            'shareholders'  => $shareholders
         ];
         return view('home',$this->data);
     }

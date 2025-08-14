@@ -104,7 +104,7 @@
                                     @if (auth()->user()->id==1)
                                     <td>{{$row->creator->name}}</td>
                                     @endif
-                                    <td>{{date('M d, Y H:i',strtotime($row->updated_at))}}
+                                    <td>{{date('Y/m/d H:i:s',strtotime($row->updated_at))}}
                                     <td><button class="btn btn-outline-primary btn-sm m-1 p-2 post_edit_btn" data-toggle="modal" data-target="#modal-edit-post-form" data-id='{{$row->id}}' data-url='{{ route('post.update', $row->id) }}'><i class="fa-solid fa-pen-to-square"></i></button></td>
                                 </tr>
                                 @endforeach

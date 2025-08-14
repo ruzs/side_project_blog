@@ -121,7 +121,6 @@
         <script>
             toastr.success("{{ config('messages.SuccessSaving') }}");
             console.log("2","{{ config('messages.SuccessSaving') }}");
-            
         </script>
     @endif
 
@@ -129,19 +128,16 @@
         <script>
             toastr.error("{{ session('error-message') }}");
             console.log("3","{{ session('error-message') }}");
-            
         </script>
     @elseif ($errors->any())
         <script>
             toastr.error("{{ config('messages.FieldInputError') }}");
             console.log("4","{{ config('messages.FieldInputError') }}");
-            
         </script>
     @elseif (session('error'))
         <script>
             toastr.error("{{ config('messages.Error') }}");
             console.log("5","{{ config('messages.Error') }}");
-            
         </script>
     @endif
     <script>

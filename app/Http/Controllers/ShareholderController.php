@@ -14,6 +14,7 @@ use App\Entities\Role;
 use App\Repositories\RoleRepository;
 use App\Entities\Point;
 use App\Repositories\PointRepository;
+use Illuminate\Support\Facades\Log;
 
 
 class ShareholderController extends Controller
@@ -125,7 +126,7 @@ class ShareholderController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            Log::info('Error:'.$e);
             // return response()->json([
             //     "success" => false,
             //     "message" => @$e->getMessage(),
@@ -137,8 +138,65 @@ class ShareholderController extends Controller
         //     return redirect()->back()->with('success', true);
         return redirect()->route('shareholder.index')->with('success', true);
     }
-    public function update(Point $point)
-    {
 
+    public function update(Request $request)
+    {
+        $data = $request->all();
+        $count = $data['count'];
+        $sum = 0;
+        $save_datas = [];
+        DB::beginTransaction();
+        try {
+            foreach ($data as $key => $value) {
+                if (preg_match('/^(point)(\d+)$/', $key,$id) && $value) {
+                    array_push($save_datas,['user_id'=>$id[2], 'point'=>$value]);
+                    $sum = $sum + $value;
+                }
+            }
+            if ($sum!=0) {
+                throw new \Exception('分數不完整，相差'.$sum.'分', config('errors.custom_error.code'));
+            }
+
+            $old_points = $this->point_repo->getByCount($count);
+            // dump('count',count($old_points) , count($save_datas));
+            if (count($old_points) == count($save_datas)) {
+                foreach($old_points as $key => $old_point){
+                    $old_point->update($save_datas[$key]);
+                    // dump($key, $old_point,$save_datas[$key]);
+                }
+            }else if(count($old_points)>count($save_datas)){
+                foreach ($old_points as $key => $old_point) {
+                    if (@$save_datas[$key]) {
+                        $old_point->update($save_datas[$key]);
+                        // dump($key, $old_point,$save_datas[$key]);
+                    }else{
+                        $old_point->update(['user_id'=>0, 'point'=>0, 'count'=>$count]);
+                        // dump('old_point', $old_point);
+                    }
+                }
+            }else{
+                foreach ($save_datas as $key => $save_data) {
+                    if(@$old_points[$key]){
+                        $old_points[$key]->update($save_data);
+                        // dump($key, $old_points[$key],$save_data);
+                    }else{
+                        $save_data['count'] = $count;
+                        $this->point_repo->save($save_data);
+                        // dump('$save_data', $save_data);
+                    }
+                }
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::info('Error:'.$e);
+            return redirect()->back()->with('error', @$e->getMessage()?:"false");
+        }
+
+        dd('All',$data,$save_datas,$count);
+    }
+    
+    public function data(Request $request) {
+        return $this->point_repo->getByCount($request->count);
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Entities\Category;
 use App\Repositories\CategoryRepository;
 // use App\Repositories\ErrorLogRepository;
+use Illuminate\Support\Facades\Log;
 
 use App\Http\Requests\CategoryFormRequest;
 
@@ -98,7 +99,7 @@ class CategoryController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            Log::info('Error:'.$e);
             // $this->errorlog_repo->saveError($e);
             return redirect()->back()->with('error', true);
         }
@@ -157,7 +158,7 @@ class CategoryController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            Log::info('Error:'.$e);
             // $this->errorlog_repo->saveError($e);
             return redirect()->back()->with('error', true);
         }
